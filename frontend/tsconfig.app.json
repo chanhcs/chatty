@@ -22,14 +22,13 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    // shadcn
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
-  "include": ["src"],
-  // Shadcn
-  "baseUrl": ".",
-  "paths": {
-    "@/*": [
-      "./src/*"
-    ]
-  }
+  "include": ["src"]
 }

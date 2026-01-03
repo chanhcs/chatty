@@ -19,10 +19,10 @@
     --popover-foreground: 240 15% 15%;
 
     /* Primary */
-    /* Tím */
-    --primary: 271 79% 47%;
+    /* green */
+    --primary: 120 60% 38%;
     --primary-foreground: 210 40% 96.1%; /*slate-100*/
-    /* Hồng */
+    /* pink */
     --primary-glow: 320 100% 70%;
 
     /* Secondary - lavender */
@@ -95,7 +95,7 @@
     --gradient-green: radial-gradient(
       125% 125% at 50% 10%,
     hsla(0, 0%, 100%, 1) 40%,
-    hsla(160, 84%, 39%, 0.5) 100%
+    hsla(160, 84%, 39%, 1) 100%
     );
 
     /* Shadows */
@@ -264,8 +264,8 @@
     background: var(--gradient-glass);
   }
 
-  .bg-gradient-purple {
-    background: var(--gradient-purple);
+  .bg-gradient-green {
+    background: var(--gradient-green);
   }
 
   /* Shadows */
