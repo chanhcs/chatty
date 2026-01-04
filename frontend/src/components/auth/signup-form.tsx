@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Link } from "react-router"
+import { Link, useNavigate } from "react-router"
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { Eye, EyeOff } from "lucide-react"
@@ -9,10 +9,11 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
+import { useAuthStore } from "@/stores/useAuthStore";
 
 const registerSchema = z.object({
-  firstname: z.string().nonempty('First name is required'),
-  lastname: z.string().nonempty('Last name is required'),
+  firstName: z.string().nonempty('First name is required'),
+  lastName: z.string().nonempty('Last name is required'),
   username: z.string().min(3, 'Username must have at least 3 characters'),
   email: z.email("Email address is not valid"),
   password: z.string().min(6, 'Password must have at least 6 characters'),
@@ -30,13 +31,16 @@ export function SignupForm({
 }: React.ComponentProps<"div">) {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-
+  const { signUp } = useAuthStore()
+  const navigate = useNavigate()
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<registerValues>({
     resolver: zodResolver(registerSchema)
   })
 
   const onSubmit = async (data: registerValues) => {
     const { confirmPassword, ...payload } = data
+    await signUp(payload)
+    navigate('/login')
   }
 
   return (
@@ -53,34 +57,34 @@ export function SignupForm({
                 <span className="text-center text-muted-foreground text-balance">Welcome! Create an account to get started!</span>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="space-y-2">
-                    <Label htmlFor="firstname" className="text-sm">
+                    <Label htmlFor="firstName" className="text-sm">
                       First Name
                     </Label>
                     <Input
                       type="text"
-                      id="firstname"
-                      className={errors.firstname && "border-red-400"}
-                      {...register("firstname")}
+                      id="firstName"
+                      className={errors.firstName && "border-red-400"}
+                      {...register("firstName")}
                     />
-                    {errors.firstname && (
+                    {errors.firstName && (
                       <p className="text-destructive text-xs">
-                        {errors.firstname.message}
+                        {errors.firstName.message}
                       </p>
                     )}
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="lastname" className="text-sm">
+                    <Label htmlFor="lastName" className="text-sm">
                       Last Name
                     </Label>
                     <Input
                       type="text"
-                      id="lastname"
-                      className={errors.lastname && "border-red-400"}
-                      {...register("lastname")}
+                      id="lastName"
+                      className={errors.lastName && "border-red-400"}
+                      {...register("lastName")}
                     />
-                    {errors.lastname && (
+                    {errors.lastName && (
                       <p className="text-destructive text-xs">
-                        {errors.lastname.message}
+                        {errors.lastName.message}
                       </p>
                     )}
                   </div>

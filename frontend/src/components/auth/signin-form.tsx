@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Link } from "react-router"
+import { Link, useNavigate } from "react-router"
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { Eye, EyeOff } from "lucide-react"
@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
+import { useAuthStore } from "@/stores/useAuthStore";
 
 const loginSchema = z.object({
     username: z.string().min(3, 'Username must have at least 3 characters'),
@@ -22,13 +23,15 @@ export function SigninForm({
     ...props
 }: React.ComponentProps<"div">) {
     const [showPassword, setShowPassword] = useState(false)
-
+    const { signIn } = useAuthStore()
+    const navigate = useNavigate()
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<loginValues>({
         resolver: zodResolver(loginSchema)
     })
 
     const onSubmit = async (data: loginValues) => {
-        //data
+        await signIn(data)
+        navigate('/')
     }
 
     return (
