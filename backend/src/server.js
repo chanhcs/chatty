@@ -15,7 +15,8 @@ const PORT = process.env.PORT || 5001;
 // middlewares
 app.use(express.json());
 app.use(cookieParser())
-app.use(cors({origin: process.env.CLIENT_URL, credentials: true}))
+app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+
 
 // public router
 app.use('/api/auth', authRoute)
@@ -27,7 +28,7 @@ app.use('/api/users', userRoute)
 const startServer = async () => {
     await connectDB();
     app.listen(PORT, () => {
-        console.log(`🚀 Server started on port ${PORT}`);
+        console.log(`Server started on port ${PORT}`);
     });
 };
 

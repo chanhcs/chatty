@@ -1,3 +1,5 @@
+import type { User } from "./user"
+
 export interface RegisterPayload {
   firstName: string
   lastName: string
@@ -11,12 +13,17 @@ export interface LoginPayload {
   password: string
 }
 
+
+
 export interface AuthState {
-    user: null | Record<string, unknown>
+    user: User | null
     accessToken: string | null
     loading: boolean
     clearState: () => void
+    setAccessToken: (data: string) => void
     signUp: (data: RegisterPayload) => Promise<void>
     signIn: (data: LoginPayload) => Promise<void>
     logout: () => Promise<void>
+    fetchMe: () => Promise<void>
+    refresh: () => Promise<void>
 }

@@ -41,9 +41,9 @@ export function SigninForm({
                     <form className="p-6 md:p-8 self-center" onSubmit={handleSubmit(onSubmit)}>
                         <div className="flex flex-col gap-6">
                             <div className="flex flex-col items-center gap-2">
-                                <Link to='/' className="mx-auto block w-fit">
+                                <div className="mx-auto block w-fit">
                                     <img src='/logo.svg' alt='logo' />
-                                </Link>
+                                </div>
                                 <p className="text-2xl font-bold">Login</p>
                                 <span className="text-center text-muted-foreground text-balance">Log in to your account</span>
                                 <div className="flex flex-col gap-3 w-full">
