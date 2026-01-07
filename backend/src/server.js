@@ -5,6 +5,8 @@ import { connectDB } from "./libs/db.js";
 import cookieParser from "cookie-parser";
 import authRoute from './routes/authRoute.js'
 import userRoute from './routes/userRoute.js'
+import friendRoute from './routes/friendRoute.js'
+import messageRoute from './routes/messageRoute.js'
 import { protectedRoute } from "./middlewares/authMiddleware.js";
 
 dotenv.config();
@@ -24,6 +26,8 @@ app.use('/api/auth', authRoute)
 // private router
 app.use(protectedRoute)
 app.use('/api/users', userRoute)
+app.use('/api/friends', friendRoute)
+app.use('/api/messages', messageRoute)
 
 const startServer = async () => {
     await connectDB();

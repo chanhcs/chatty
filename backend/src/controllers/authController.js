@@ -82,7 +82,6 @@ export const login = async (req, res) => {
 export const logout = async (req, res) => {
   try {
     const token = req.cookies?.refreshToken
-    console.log(token)
     if (token) {
       await Session.deleteOne({ refreshToken: token })
     }
