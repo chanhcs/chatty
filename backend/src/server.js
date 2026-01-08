@@ -9,6 +9,8 @@ import friendRoute from './routes/friendRoute.js'
 import messageRoute from './routes/messageRoute.js'
 import conversationRoute from './routes/conversationRoute.js'
 import { protectedRoute } from "./middlewares/authMiddleware.js";
+import swaggerUi from "swagger-ui-express"
+import fs from "fs"
 
 dotenv.config();
 
@@ -19,6 +21,10 @@ const PORT = process.env.PORT || 5001;
 app.use(express.json());
 app.use(cookieParser())
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+
+// swagger
+const swaggerDocument = JSON.parse(fs.readFileSync("./src/swagger.json", "utf8"));
+app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 // public router
