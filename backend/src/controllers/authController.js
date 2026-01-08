@@ -25,7 +25,7 @@ export const register = async (req, res) => {
       username,
       email,
       password: hashedPassword,
-      displayName: `${firstName} ${lastName}`,
+      displayName: `${lastName} ${firstName}`,
     });
 
     return res.status(201).json({ message: "Registration successful!", userId: newUser._id });
