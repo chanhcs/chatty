@@ -65,12 +65,14 @@ export const login = async (req, res) => {
       expiresAt: new Date(Date.now() + REFRESH_TOKEN_TTL)
     })
 
-    res.cookie("refreshToken", refreshToken, {
+    const cookieOptions = {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       maxAge: REFRESH_TOKEN_TTL
-    })
+    }
+
+    res.cookie("refreshToken", refreshToken, cookieOptions)
 
     return res.status(200).json({ message: `User ${user.displayName} has successfully logged in`, accessToken })
   } catch (error) {

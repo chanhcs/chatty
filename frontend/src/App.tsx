@@ -4,8 +4,16 @@ import Login from './pages/LoginPage'
 import Register from './pages/RegisterPage'
 import ChatApp from './pages/ChatPage'
 import ProtectedRoute from './components/auth/ProtectedRoute'
+import { useThemeStore } from './stores/useThemeStore'
+import { useEffect } from 'react'
 
 function App() {
+  const isDark = useThemeStore((state) => state.isDark);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", isDark);
+  }, [isDark]);
+
   return (
     <>
       <Toaster richColors position="top-right" />
