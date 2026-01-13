@@ -3,6 +3,7 @@ import { toast } from 'sonner'
 import { persist } from "zustand/middleware";
 import { authServices } from '@/services/authServices'
 import type { AuthState, LoginPayload, RegisterPayload } from '@/types/auth'
+import { useChatStore } from './useChatStore';
 
 export const useAuthStore = create<AuthState>()(
     persist(
@@ -36,6 +37,7 @@ export const useAuthStore = create<AuthState>()(
                     const { accessToken } = await authServices.login(data)
                     get().setAccessToken(accessToken)
                     await get().fetchMe()
+                    useChatStore.getState().fetchConversation()
                     toast.success('Login successful!')
                 } catch (error) {
                     console.error(error)

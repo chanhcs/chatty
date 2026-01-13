@@ -1,7 +1,7 @@
 const ChatLayout = () => {
     return (
         <div>
-            ChatLayout
+            Chat Layout
         </div>
     );
 };

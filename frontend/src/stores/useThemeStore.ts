@@ -12,7 +12,7 @@ export const useThemeStore = create<ThemeState>()(
         set({ isDark: dark }),
     }),
     {
-      name: "theme",
+      name: "theme-storage",
     }
   )
 );

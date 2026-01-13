@@ -14,13 +14,13 @@ import {
 } from "@/components/ui/sidebar"
 import { Switch } from "../ui/switch"
 import AddGroupChatModal from "../chat/AddGroupChatModal"
-import GroupChatList from "../chat/GroupChatList"
+import GroupChatList from "../chat/GroupChatList/GroupChatList"
 import AddFriendModal from "../chat/AddFriendModal"
 import CreateNewChat from "../chat/CreateNewChat"
 import { useThemeStore } from "@/stores/useThemeStore"
-import FriendList from "../chat/FriendList"
 import Logout from "../auth/Logout"
 import { useAuthStore } from "@/stores/useAuthStore"
+import DirectChatList from "../chat/DirectChatList/DirectChatList"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { isDark, toggleTheme } = useThemeStore()
@@ -30,7 +30,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild className="bg-gradient-primary">
+            <SidebarMenuButton size="lg" asChild className="bg-gradient-primary rounded-none glass">
               <div className="flex w-full items-center px-2 justify-between">
                 <p className="text-xl font-bold text-white">Chatty</p>
                 <div className="flex items-center gap-2">
@@ -84,15 +84,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <AddFriendModal />
           </SidebarGroupAction>
           <SidebarGroupContent>
-            <FriendList />
+            <DirectChatList />
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
 
       <SidebarFooter>
         {/* <NavUser user={data.user} /> */}
-        <div>{user?.displayName}</div>
-        <Logout />
+        <div className="flex justify-end">
+          <Logout />
+        </div>
       </SidebarFooter>
     </Sidebar>
   )
