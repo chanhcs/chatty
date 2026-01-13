@@ -17,16 +17,18 @@ import AddGroupChatModal from "../chat/AddGroupChatModal"
 import GroupChatList from "../chat/GroupChatList/GroupChatList"
 import AddFriendModal from "../chat/AddFriendModal"
 import CreateNewChat from "../chat/CreateNewChat"
+import Snowfall from "./Snowfall"
 import { useThemeStore } from "@/stores/useThemeStore"
 import Logout from "../auth/Logout"
-import { useAuthStore } from "@/stores/useAuthStore"
+// import { useAuthStore } from "@/stores/useAuthStore"
 import DirectChatList from "../chat/DirectChatList/DirectChatList"
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ className, ...props }: React.ComponentProps<typeof Sidebar>) {
   const { isDark, toggleTheme } = useThemeStore()
-  const user = useAuthStore(s => s.user)
+  // const user = useAuthStore(s => s.user)
   return (
-    <Sidebar variant="inset" {...props}>
+    <Sidebar variant="inset" className={`${className ?? ''} relative`} {...props}>
+      {isDark && <Snowfall className="absolute inset-0 pointer-events-none z-0" />}
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
