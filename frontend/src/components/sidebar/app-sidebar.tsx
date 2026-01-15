@@ -20,12 +20,13 @@ import CreateNewChat from "../chat/CreateNewChat"
 import Snowfall from "./Snowfall"
 import { useThemeStore } from "@/stores/useThemeStore"
 import Logout from "../auth/Logout"
-// import { useAuthStore } from "@/stores/useAuthStore"
+import { useAuthStore } from "@/stores/useAuthStore"
 import DirectChatList from "../chat/DirectChatList/DirectChatList"
+import { NavUser } from "./nav-user"
 
 export function AppSidebar({ className, ...props }: React.ComponentProps<typeof Sidebar>) {
   const { isDark, toggleTheme } = useThemeStore()
-  // const user = useAuthStore(s => s.user)
+  const user = useAuthStore(s => s.user)
   return (
     <Sidebar variant="inset" className={`${className ?? ''} relative`} {...props}>
       {isDark && <Snowfall className="absolute inset-0 pointer-events-none z-0" />}
@@ -60,7 +61,7 @@ export function AppSidebar({ className, ...props }: React.ComponentProps<typeof 
 
         {/* Group Chat */}
         <SidebarGroup>
-          <SidebarGroupLabel>
+          <SidebarGroupLabel className="uppercase">
             Group Chat
           </SidebarGroupLabel>
           <SidebarGroupAction
@@ -76,7 +77,7 @@ export function AppSidebar({ className, ...props }: React.ComponentProps<typeof 
 
         {/* Direct Chat */}
         <SidebarGroup>
-          <SidebarGroupLabel>
+          <SidebarGroupLabel className="uppercase">
             Friends
           </SidebarGroupLabel>
           <SidebarGroupAction
@@ -90,12 +91,8 @@ export function AppSidebar({ className, ...props }: React.ComponentProps<typeof 
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-
       <SidebarFooter>
-        {/* <NavUser user={data.user} /> */}
-        <div className="flex justify-end">
-          <Logout />
-        </div>
+        {user && <NavUser user={user} />}
       </SidebarFooter>
     </Sidebar>
   )

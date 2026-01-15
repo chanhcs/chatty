@@ -2,6 +2,7 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router";
 import { useThemeStore } from "@/stores/useThemeStore";
+import { LogOut } from "lucide-react";
 
 const Logout = () => {
     const { logout } = useAuthStore()
@@ -14,7 +15,15 @@ const Logout = () => {
         navigate('/login')
     }
 
-    return <Button type="button" className="cursor-pointer" onClick={handleLougout}>Log out</Button>
+    return <Button
+        type="button"
+        variant="transparent"
+        className="cursor-pointer"
+        onClick={handleLougout}
+    >
+        <LogOut className="text-destructive" />
+        <span className="text-destructive">Logout</span>
+    </Button>
 };
 
 export default Logout;

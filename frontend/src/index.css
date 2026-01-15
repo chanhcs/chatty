@@ -8,11 +8,11 @@
   :root {
     /* Base colors - soft pastels */
     --background: 0 0% 100%; /*violet-50*/
-    --foreground: 217.2 32.6% 17.5%; /* slate-800 */
+    --foreground: 217.2 32.6% 25%;
 
     /* Card system */
     --card: 250 100% 99%;
-    --card-foreground: 217.2 32.6% 17.5%;
+    --card-foreground: 217.2 32.6% 25%;
 
     /* Popover system */
     --popover: 250 100% 99%;
@@ -76,7 +76,7 @@
     );    
     --gradient-chat: linear-gradient(
       135deg,
-      hsl(280, 100%, 65%),
+      hsl(4, 100%, 59%),
       hsl(320, 100%, 70%)
     );
     --gradient-accent: linear-gradient(

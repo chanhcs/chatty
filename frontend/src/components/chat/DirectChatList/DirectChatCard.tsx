@@ -3,6 +3,9 @@ import { useChatStore } from "@/stores/useChatStore";
 import type { Conversation } from "@/types/chat";
 import ChatCard from "../components/ChatCard";
 import { cn } from "@/lib/utils";
+import CoreAvatar from "../components/CoreAvatar";
+import { StatusBadge } from "../components/StatusBadge";
+import UnreadCountBadge from "../components/UnreadCountBadge";
 
 const DirectChatCard = ({ convo }: { convo: Conversation }) => {
     const { user } = useAuthStore()
@@ -20,7 +23,7 @@ const DirectChatCard = ({ convo }: { convo: Conversation }) => {
     return (
         <ChatCard
             convoId={convo._id}
-            name={otherUser.displayName ?? ""}
+            name={otherUser.displayName}
             timestamp={
                 convo.lastMessage?.createdAt
                     ? new Date(convo.lastMessage.createdAt)
@@ -30,7 +33,15 @@ const DirectChatCard = ({ convo }: { convo: Conversation }) => {
             unreadCount={unreadCount}
             onSelect={handleSelectConvo}
             leftSection={
-                <div>Avatar</div>
+                <>
+                    <CoreAvatar
+                        name={otherUser.displayName}
+                        avatarUrl=""
+                        type="sidebar"
+                    />
+                    <StatusBadge status="online" />
+                    {unreadCount > 0 && <UnreadCountBadge unreadCount={unreadCount} />}
+                </>
             }
             subtitle={
                 <p className={cn("text-sm truncate",
