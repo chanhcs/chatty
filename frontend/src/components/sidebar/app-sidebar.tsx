@@ -19,7 +19,6 @@ import AddFriendModal from "../chat/AddFriendModal"
 import CreateNewChat from "../chat/CreateNewChat"
 import Snowfall from "./Snowfall"
 import { useThemeStore } from "@/stores/useThemeStore"
-import Logout from "../auth/Logout"
 import { useAuthStore } from "@/stores/useAuthStore"
 import DirectChatList from "../chat/DirectChatList/DirectChatList"
 import { NavUser } from "./nav-user"
@@ -33,20 +32,25 @@ export function AppSidebar({ className, ...props }: React.ComponentProps<typeof 
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild className="bg-gradient-primary rounded-none glass">
-              <div className="flex w-full items-center px-2 justify-between">
-                <p className="text-xl font-bold text-white">Chatty</p>
-                <div className="flex items-center gap-2">
-                  <Sun className="size-4 text-white/80" />
-                  <Switch
-                    checked={isDark}
-                    onCheckedChange={toggleTheme}
-                    className="data-[state=checked]:bg-background/80"
-                  />
-                  <Moon className="size-4 text-white/80" />
-                </div>
+            <div className="flex w-full items-center px-4 justify-between border-b pb-4.5">
+              <div className="flex items-center gap-2">
+                <img src='/logo.svg' width={25} height={25} />
+                <p className="text-xl font-bold">Chatty</p>
               </div>
-            </SidebarMenuButton>
+              <div className="flex items-center gap-2">
+                <img src="/sun.svg" alt="sun" width={20} height={20} />
+                <Switch
+                  checked={isDark}
+                  onCheckedChange={toggleTheme}
+                  className="transition-all duration-300
+                          data-[state=unchecked]:bg-[hsl(120_60%_45%)]!
+                          data-[state=checked]:bg-indigo-500!
+                          dark:data-[state=unchecked]:bg-[hsl(120_60%_45%)]!
+                          dark:data-[state=checked]:bg-indigo-500"
+                />
+                <img src={isDark ? "/moon-white.svg" : "/moon.svg"} alt="moon" width={20} height={20} />
+              </div>
+            </div>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>

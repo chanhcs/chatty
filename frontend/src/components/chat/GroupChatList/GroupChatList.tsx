@@ -6,7 +6,7 @@ const GroupChatList = () => {
     if (!conversations) return null;
     const groupChats = conversations.filter(convo => convo.type === 'group')
     return (
-        <div className="flex-1 p-2 space-y-2 overflow-y-auto">
+        <div className="flex-1 p-2 space-y-2">
             {
                 groupChats.map((convo) => (
                     <GroupChatCard

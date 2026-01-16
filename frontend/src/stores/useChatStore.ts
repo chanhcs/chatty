@@ -29,6 +29,9 @@ export const useChatStore = create<ChatState>()(
                 } finally {
                     set({loading: false})
                 }
+            },
+            fetchMessage: async () => {
+                
             }
         }),
         {

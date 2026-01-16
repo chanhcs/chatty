@@ -51,7 +51,7 @@ export function SignupForm({
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center gap-2">
                 <div className="mx-auto block w-fit">
-                  <img src='/logo.svg' alt='logo' />
+                  <img src='/logo.svg' alt='logo' width={40} height={40} />
                 </div>
                 <p className="text-2xl font-bold">Register</p>
                 <span className="text-center text-muted-foreground text-balance">Welcome! Create an account to get started!</span>

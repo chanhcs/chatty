@@ -44,6 +44,12 @@ export interface ConversationResponse {
   conversations: Conversation[];
 }
 
+export interface MessageResponse {
+  messages: Message[];
+  cursor?: string;
+}
+
+
 export interface Message {
   _id: string;
   conversationId: string;
@@ -70,4 +76,5 @@ export interface ChatState {
   reset: () => void;
   setActiveConversation: (id: string | null) => void;
   fetchConversation: () => Promise<void>;
+  fetchMessage: (conversationId: string) => Promise<void>;
 }
