@@ -1,4 +1,3 @@
-import { Moon, Sun, } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
@@ -9,7 +8,6 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { Switch } from "../ui/switch"
@@ -17,7 +15,6 @@ import AddGroupChatModal from "../chat/AddGroupChatModal"
 import GroupChatList from "../chat/GroupChatList/GroupChatList"
 import AddFriendModal from "../chat/AddFriendModal"
 import CreateNewChat from "../chat/CreateNewChat"
-import Snowfall from "./Snowfall"
 import { useThemeStore } from "@/stores/useThemeStore"
 import { useAuthStore } from "@/stores/useAuthStore"
 import DirectChatList from "../chat/DirectChatList/DirectChatList"
@@ -28,11 +25,10 @@ export function AppSidebar({ className, ...props }: React.ComponentProps<typeof 
   const user = useAuthStore(s => s.user)
   return (
     <Sidebar variant="inset" className={`${className ?? ''} relative`} {...props}>
-      {isDark && <Snowfall className="absolute inset-0 pointer-events-none z-0" />}
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <div className="flex w-full items-center px-4 justify-between border-b pb-4.5">
+            <div className="flex w-full items-center px-4 justify-between border-b h-18">
               <div className="flex items-center gap-2">
                 <img src='/logo.svg' width={25} height={25} />
                 <p className="text-xl font-bold">Chatty</p>
