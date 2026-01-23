@@ -5,8 +5,8 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import { LogOut } from "lucide-react";
 
 const Logout = () => {
-    const { logout } = useAuthStore()
-    const { setTheme } = useThemeStore()
+    const logout = useAuthStore(state => state.logout)
+    const setTheme = useThemeStore(state => state.setTheme);
     const navigate = useNavigate()
 
     const handleLougout = async () => {

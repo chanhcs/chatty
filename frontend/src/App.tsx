@@ -8,7 +8,7 @@ import { useThemeStore } from './stores/useThemeStore'
 import { useEffect } from 'react'
 
 function App() {
-  const isDark = useThemeStore((state) => state.isDark);
+  const isDark = useThemeStore(state => state.isDark);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDark);

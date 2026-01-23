@@ -22,7 +22,7 @@ import { NavUser } from "./nav-user"
 
 export function AppSidebar({ className, ...props }: React.ComponentProps<typeof Sidebar>) {
   const { isDark, toggleTheme } = useThemeStore()
-  const user = useAuthStore(s => s.user)
+  const user = useAuthStore(state => state.user)
   return (
     <Sidebar variant="inset" className={`${className ?? ''} relative`} {...props}>
       <SidebarHeader>

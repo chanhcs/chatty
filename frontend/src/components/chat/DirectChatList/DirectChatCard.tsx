@@ -8,7 +8,7 @@ import UnreadCountBadge from "../components/UnreadCountBadge";
 import ChatAvatar from "../components/ChatAvatar";
 
 const DirectChatCard = ({ convo }: { convo: Conversation }) => {
-    const { user } = useAuthStore()
+    const user = useAuthStore(state => state.user)
     const { activeConversationId, setActiveConversation, messages, fetchMessages } = useChatStore()
     if (!user) return null;
     const otherUser = convo.participants.find(p => p._id !== user._id)

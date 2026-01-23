@@ -31,7 +31,7 @@ export function SignupForm({
 }: React.ComponentProps<"div">) {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const { signUp } = useAuthStore()
+  const signUp = useAuthStore(state => state.signUp)
   const navigate = useNavigate()
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<registerValues>({
     resolver: zodResolver(registerSchema)

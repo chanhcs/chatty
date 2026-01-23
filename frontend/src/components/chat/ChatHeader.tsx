@@ -8,7 +8,7 @@ import ChatAvatar from "./components/ChatAvatar";
 
 const ChatHeader = ({ chat }: { chat?: Conversation }) => {
     const { conversations, activeConversationId } = useChatStore();
-    const { user } = useAuthStore();
+    const user = useAuthStore(state => state.user);
 
     let otherUser;
 

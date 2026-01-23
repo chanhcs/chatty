@@ -61,6 +61,10 @@ export interface Message {
   isOwn?: boolean;
 }
 
+export interface EmojiSelect {
+    native: string;
+}
+
 export interface ChatState {
   conversations: Conversation[];
   messages: Record<
