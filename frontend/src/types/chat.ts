@@ -65,6 +65,16 @@ export interface EmojiSelect {
     native: string;
 }
 
+export interface SendGroupMessage {
+  conversationId?: string;
+  content?: string;
+  imgUrl?: string;
+}
+
+export interface SendDirectMessage extends SendGroupMessage {
+  recipientId: string;
+}
+
 export interface ChatState {
   conversations: Conversation[];
   messages: Record<
@@ -82,4 +92,6 @@ export interface ChatState {
   setActiveConversation: (id: string | null) => void;
   fetchConversation: () => Promise<void>;
   fetchMessages: (conversationId?: string) => Promise<void>;
+  sendDirectMessage: (data: SendDirectMessage) => Promise<void>;
+  sendGroupMessage: (data: SendGroupMessage) => Promise<void>;
 }

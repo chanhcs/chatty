@@ -14,7 +14,7 @@ const EmojiPicker = ({ onChange }: EmojiPickerProps) => {
     return (
         <Popover>
             <PopoverTrigger className="cursor-pointer">
-                <Smile className="size-4" />
+                <Smile className="size-5" />
             </PopoverTrigger>
             <PopoverContent
                 side="right"
