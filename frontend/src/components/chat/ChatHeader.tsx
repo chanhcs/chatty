@@ -5,10 +5,12 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import { Separator } from "../ui/separator";
 import { StatusBadge } from "./components/StatusBadge";
 import ChatAvatar from "./components/ChatAvatar";
+import { useSocketStore } from "@/stores/useSocketStore";
 
 const ChatHeader = ({ chat }: { chat?: Conversation }) => {
     const { conversations, activeConversationId } = useChatStore();
     const user = useAuthStore(state => state.user);
+    const onlineUsers = useSocketStore(state => state.onlineUsers);
 
     let otherUser;
 
@@ -47,7 +49,7 @@ const ChatHeader = ({ chat }: { chat?: Conversation }) => {
                             participants={chat.participants}
                             type={chat.type === "direct" ? "direct" : "group"}
                         />
-                        {chat.type === "direct" && <StatusBadge status="online" />}
+                        {chat.type === "direct" && <StatusBadge status={onlineUsers.includes(otherUser?._id ?? "") ? "online" : "offline"} />}
                     </div>
 
                     <div className="font-semibold text-foreground">

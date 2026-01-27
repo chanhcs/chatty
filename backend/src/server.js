@@ -1,20 +1,20 @@
 import express from "express";
 import cors from "cors"
+import swaggerUi from "swagger-ui-express"
+import fs from "fs"
+import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import { connectDB } from "./libs/db.js";
-import cookieParser from "cookie-parser";
 import authRoute from './routes/authRoute.js'
 import userRoute from './routes/userRoute.js'
 import friendRoute from './routes/friendRoute.js'
 import messageRoute from './routes/messageRoute.js'
 import conversationRoute from './routes/conversationRoute.js'
+import { app, server } from "./socket/index.js"
 import { protectedRoute } from "./middlewares/authMiddleware.js";
-import swaggerUi from "swagger-ui-express"
-import fs from "fs"
 
 dotenv.config();
 
-const app = express();
 const PORT = process.env.PORT || 5001;
 
 // middlewares
@@ -39,7 +39,7 @@ app.use('/api/conversations', conversationRoute)
 
 const startServer = async () => {
     await connectDB();
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
         console.log(`Server started on port ${PORT}`);
     });
 };

@@ -6,9 +6,11 @@ import { cn } from "@/lib/utils";
 import { StatusBadge } from "../components/StatusBadge";
 import UnreadCountBadge from "../components/UnreadCountBadge";
 import ChatAvatar from "../components/ChatAvatar";
+import { useSocketStore } from "@/stores/useSocketStore";
 
 const DirectChatCard = ({ convo }: { convo: Conversation }) => {
     const user = useAuthStore(state => state.user)
+    const onlineUsers = useSocketStore(state => state.onlineUsers);
     const { activeConversationId, setActiveConversation, messages, fetchMessages } = useChatStore()
     if (!user) return null;
     const otherUser = convo.participants.find(p => p._id !== user._id)
@@ -42,7 +44,7 @@ const DirectChatCard = ({ convo }: { convo: Conversation }) => {
                         name={otherUser.displayName}
                         avatarUrl=""
                     />
-                    <StatusBadge status="online" />
+                    <StatusBadge status={onlineUsers.includes(otherUser?._id ?? "") ? "online" : "offline"} />
                     {unreadCount > 0 && <UnreadCountBadge unreadCount={unreadCount} />}
                 </>
             }
