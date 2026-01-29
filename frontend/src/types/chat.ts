@@ -94,4 +94,7 @@ export interface ChatState {
   fetchMessages: (conversationId?: string) => Promise<void>;
   sendDirectMessage: (data: SendDirectMessage) => Promise<void>;
   sendGroupMessage: (data: SendGroupMessage) => Promise<void>;
+  addMessage: (message: Message) => Promise<void>;
+  updateConversation: (conversation: unknown) => void;
+  markAsSeen: () => Promise<void>;
 }

@@ -1,32 +1,37 @@
-import { Server } from "socket.io"
+import { Server } from "socket.io";
 import http from "http";
 import express from "express";
 import { socketAuthMiddleware } from "../middlewares/socketAuthMiddleware.js";
+import { getUserConversationsForSocketIO } from "../controllers/conversationController.js";
 
 const app = express();
 
 const server = http.createServer(app);
 
 const io = new Server(server, {
-    cors: {
-        origin: process.env.CLIENT_URL,
-        credentials: true
-    }
-})
+  cors: {
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+  },
+});
 
-io.use(socketAuthMiddleware)
+io.use(socketAuthMiddleware);
 
-const onlineUsers = new Map()
+const onlineUsers = new Map();
 io.on("connection", async (socket) => {
-    const user = socket.user
-    console.log(`user ${user.displayName} online with socket: ${socket.id}`);
-    onlineUsers.set(user._id, socket.id)
-    io.emit("online-users", [...onlineUsers.keys()])
-    socket.on("disconnect", () => {
-        onlineUsers.delete(user._id)
-        io.emit("online-users", [...onlineUsers.keys()])
-        console.log(`socket disconnected: ${socket.id}`)
-    })
-})
+  const user = socket.user;
+  console.log(`user ${user.displayName} online with socket: ${socket.id}`);
+  onlineUsers.set(user._id, socket.id);
+  io.emit("online-users", [...onlineUsers.keys()]);
+  const conversationIds = await getUserConversationsForSocketIO(user._id);
+  conversationIds.forEach((id) => {
+    socket.join(id);
+  });
+  socket.on("disconnect", () => {
+    onlineUsers.delete(user._id);
+    io.emit("online-users", [...onlineUsers.keys()]);
+    console.log(`socket disconnected: ${socket.id}`);
+  });
+});
 
-export {io, app, server}
+export { io, app, server };

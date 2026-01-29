@@ -24,7 +24,7 @@ export function AppSidebar({ className, ...props }: React.ComponentProps<typeof 
   const { isDark, toggleTheme } = useThemeStore()
   const user = useAuthStore(state => state.user)
   return (
-    <Sidebar variant="inset" className={`${className ?? ''} relative`} {...props}>
+    <Sidebar className={`${className ?? ''}`} {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -61,15 +61,12 @@ export function AppSidebar({ className, ...props }: React.ComponentProps<typeof 
 
         {/* Group Chat */}
         <SidebarGroup>
-          <SidebarGroupLabel className="uppercase">
-            Group Chat
-          </SidebarGroupLabel>
-          <SidebarGroupAction
-            title='Create Group'
-            className="cursor-pointer"
-          >
+          <div className="flex items-center justify-between">
+            <SidebarGroupLabel className="uppercase">
+              Group Chat
+            </SidebarGroupLabel>
             <AddGroupChatModal />
-          </SidebarGroupAction>
+          </div>
           <SidebarGroupContent>
             <GroupChatList />
           </SidebarGroupContent>
@@ -77,15 +74,12 @@ export function AppSidebar({ className, ...props }: React.ComponentProps<typeof 
 
         {/* Direct Chat */}
         <SidebarGroup>
-          <SidebarGroupLabel className="uppercase">
-            Friends
-          </SidebarGroupLabel>
-          <SidebarGroupAction
-            title='Add friend'
-            className="cursor-pointer"
-          >
+          <div className="flex items-center justify-between">
+            <SidebarGroupLabel className="uppercase">
+              Friends
+            </SidebarGroupLabel>
             <AddFriendModal />
-          </SidebarGroupAction>
+          </div>
           <SidebarGroupContent>
             <DirectChatList />
           </SidebarGroupContent>

@@ -5,10 +5,17 @@ import { SidebarInset } from "../ui/sidebar";
 import ChatHeader from "./ChatHeader";
 import ChatContent from "./ChatContent";
 import ChatInput from "./ChatInput";
+import { useEffect } from "react";
 
 const ChatLayout = () => {
-    const { activeConversationId, conversations, messageLoading: loading } = useChatStore()
+    const { activeConversationId, conversations, messageLoading: loading, markAsSeen } = useChatStore()
     const selectedConvo = conversations.find(convo => convo._id === activeConversationId)
+
+    useEffect(() => {
+        if (!selectedConvo) return;
+        markAsSeen();
+    }, [markAsSeen, selectedConvo]);
+
     if (!selectedConvo) {
         return <ChatWelcomScreen />
     }

@@ -3,6 +3,7 @@ import type { Conversation, Message } from "@/types/chat";
 import ChatAvatar from "./ChatAvatar";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { CheckCheck } from "lucide-react";
 
 const FIVE_MINUTES = 5 * 60 * 1000;
 
@@ -63,15 +64,17 @@ const MessageItem = ({ message, index, messages, selectedConvo, lastMessageStatu
 
                 {message.isOwn && message._id === selectedConvo.lastMessage?._id && (
                     <Badge
-                        variant="outline"
                         className={cn(
-                            "text-xs px-1.5 py-0.5 h-4 border-0",
+                            "flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] border-0",
                             lastMessageStatus === "seen"
-                                ? "bg-primary/20 text-primary"
-                                : "bg-muted text-muted-foreground"
+                                ? "bg-primary/15 text-primary"
+                                : "bg-transparent text-muted-foreground"
                         )}
                     >
-                        {lastMessageStatus}
+                        {lastMessageStatus === "seen" && (
+                            <CheckCheck className="h-3.5 w-3.5" />
+                        )}
+                        <span>{lastMessageStatus}</span>
                     </Badge>
                 )}
             </div>

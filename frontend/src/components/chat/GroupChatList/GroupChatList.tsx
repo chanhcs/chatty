@@ -6,16 +6,11 @@ const GroupChatList = () => {
     if (!conversations) return null;
     const groupChats = conversations.filter(convo => convo.type === 'group')
     return (
-        <div className="flex-1 p-2 space-y-2">
-            {
-                groupChats.map((convo) => (
-                    <GroupChatCard
-                        key={convo._id}
-                        convo={convo}
-                    />
-                ))
-            }
-        </div>
+        <>
+            {groupChats.map((convo) => (
+                <GroupChatCard key={convo._id} convo={convo} />
+            ))}
+        </>
     );
 };
 

@@ -6,13 +6,11 @@ const DirectChatList = () => {
     if (!conversations) return null;
     const directChats = conversations.filter(convo => convo.type === 'direct')
     return (
-        <div className="flex-1 p-2 space-y-2">
-            {
-                directChats.map((convo) => (
-                    <DirectChatCard key={convo._id} convo={convo} />
-                ))
-            }
-        </div>
+        <>
+            {directChats.map((convo) => (
+                <DirectChatCard key={convo._id} convo={convo} />
+            ))}
+        </>
     );
 };
 
