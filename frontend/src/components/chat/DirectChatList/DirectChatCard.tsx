@@ -17,10 +17,10 @@ const DirectChatCard = ({ convo }: { convo: Conversation }) => {
     if (!otherUser) return null;
     const unreadCount = convo.unreadCounts[user._id]
     const lastMessage = convo.lastMessage?.content ?? ""
-    const handleSelectConvo = async (id: string) => {
+    const handleSelectConvo = (id: string) => {
         setActiveConversation(id)
         if (!messages[id]) {
-            await fetchMessages()
+            fetchMessages()
         }
     }
 

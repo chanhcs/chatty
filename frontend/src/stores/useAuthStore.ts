@@ -14,7 +14,9 @@ export const useAuthStore = create<AuthState>()(
 
             clearState: () => {
                 set({ user: null, accessToken: null, loading: false })
-                localStorage.clear()
+                useChatStore.getState().reset();
+                localStorage.clear();
+                sessionStorage.clear();
             },
             setAccessToken: (accessToken: string) => {
                 set({ accessToken });
@@ -33,6 +35,7 @@ export const useAuthStore = create<AuthState>()(
             },
             signIn: async (data: LoginPayload) => {
                 try {
+                    get().clearState();
                     set({ loading: true })
                     const { accessToken } = await authServices.login(data)
                     get().setAccessToken(accessToken)

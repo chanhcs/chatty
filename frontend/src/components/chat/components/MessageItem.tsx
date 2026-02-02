@@ -1,4 +1,4 @@
-import { cn, formatOnlineTime } from "@/lib/utils";
+import { cn, formatMessageTime } from "@/lib/utils";
 import type { Conversation, Message } from "@/types/chat";
 import ChatAvatar from "./ChatAvatar";
 import { Card } from "@/components/ui/card";
@@ -16,7 +16,7 @@ interface MessageItemProps {
 }
 
 const MessageItem = ({ message, index, messages, selectedConvo, lastMessageStatus }: MessageItemProps) => {
-    const prev = messages[index - 1];
+    const prev = index > 0 ? messages[index - 1] : undefined;
     const isFirstMessage = index === 0;
     const isTimeGap = prev && Date.parse(message.createdAt) - Date.parse(prev.createdAt) > FIVE_MINUTES;
     const isDifferentSender = message.senderId !== prev?.senderId
@@ -54,13 +54,11 @@ const MessageItem = ({ message, index, messages, selectedConvo, lastMessageStatu
                     <p className="text-sm leading-relaxed wrap-break-word">{message.content}</p>
                 </Card>
 
-                {
-                    isGroupBreak && (
-                        <span className="text-xs text-muted-foreground px-1">
-                            {formatOnlineTime(new Date(message.createdAt))}
-                        </span>
-                    )
-                }
+                {isTimeGap && (
+                    <span className="text-xs text-muted-foreground px-1">
+                        {formatMessageTime(new Date(message.createdAt))}
+                    </span>
+                )}
 
                 {message.isOwn && message._id === selectedConvo.lastMessage?._id && (
                     <Badge

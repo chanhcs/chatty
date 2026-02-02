@@ -83,6 +83,7 @@ export interface ChatState {
       items: Message[];
       hasMore: boolean; 
       nextCursor?: string | null;
+      initialized: boolean;
     }
   >;
   activeConversationId: string | null;
