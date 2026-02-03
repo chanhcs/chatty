@@ -1,9 +1,14 @@
+import { Button } from '@/components/ui/button';
 import { UserRoundPlus } from 'lucide-react';
 const AddFriendModal = () => {
     return (
-        <div className='cursor-pointer transition-smooth hover:bg-muted/30'>
-            <UserRoundPlus size={18} />
-        </div>
+        <Button
+            variant="ghost"
+            size="icon"
+            className="cursor-pointer hover:transition-smooth hover:bg-muted/30"
+        >
+            <UserRoundPlus className="size-4.5" />
+        </Button>
     );
 };
 

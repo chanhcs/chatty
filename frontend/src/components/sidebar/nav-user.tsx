@@ -23,8 +23,9 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import type { User } from "@/types/user"
+
 import Logout from "../auth/Logout"
+import type { User } from "@/types/store"
 
 export function NavUser({
   user,

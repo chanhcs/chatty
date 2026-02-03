@@ -60,7 +60,7 @@ export default {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
-          hover: "hsl(var(--card-hover))"
+          active: "hsl(var(--card-active))"
         },
         chat: {
           "bubble-sent": "hsl(var(--chat-bubble-sent))",

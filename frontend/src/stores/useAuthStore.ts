@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { toast } from 'sonner'
 import { persist } from "zustand/middleware";
-import { authServices } from '@/services/authServices'
+import { authService } from '@/services/authService'
 import type { AuthState, LoginPayload, RegisterPayload } from '@/types/auth'
 import { useChatStore } from './useChatStore';
 
@@ -24,7 +24,7 @@ export const useAuthStore = create<AuthState>()(
             signUp: async (data: RegisterPayload) => {
                 try {
                     set({ loading: true })
-                    await authServices.register(data)
+                    await authService.register(data)
                     toast.success('Account created successfully!')
                 } catch (error) {
                     console.error(error)
@@ -37,7 +37,7 @@ export const useAuthStore = create<AuthState>()(
                 try {
                     get().clearState();
                     set({ loading: true })
-                    const { accessToken } = await authServices.login(data)
+                    const { accessToken } = await authService.login(data)
                     get().setAccessToken(accessToken)
                     await get().fetchMe()
                     useChatStore.getState().fetchConversation()
@@ -53,7 +53,7 @@ export const useAuthStore = create<AuthState>()(
                 try {
                     set({ loading: true })
                     get().clearState()
-                    await authServices.logout()
+                    await authService.logout()
                     toast.success('Logout successful!')
                 } catch (error) {
                     console.error(error)
@@ -65,7 +65,7 @@ export const useAuthStore = create<AuthState>()(
             fetchMe: async () => {
                 try {
                     set({ loading: true })
-                    const user = await authServices.fetchMe()
+                    const user = await authService.fetchMe()
                     set({ user })
                     return user
                 } catch (error) {
@@ -79,7 +79,7 @@ export const useAuthStore = create<AuthState>()(
             refresh: async () => {
                 try {
                     set({ loading: true })
-                    const accessToken = await authServices.refresh()
+                    const accessToken = await authService.refresh()
                     const { user, fetchMe, setAccessToken } = get();
                     setAccessToken(accessToken)
                     if (!user) {

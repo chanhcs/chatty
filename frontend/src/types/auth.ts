@@ -1,4 +1,4 @@
-import type { User } from "./user"
+import type { User } from "@/types/store"
 
 export interface RegisterPayload {
   firstName: string
@@ -12,8 +12,6 @@ export interface LoginPayload {
   username: string
   password: string
 }
-
-
 
 export interface AuthState {
     user: User | null

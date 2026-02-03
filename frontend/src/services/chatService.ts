@@ -1,7 +1,7 @@
 import api from "@/lib/axios";
 import type { ConversationResponse, MessageResponse, SendDirectMessage, SendGroupMessage } from "@/types/chat";
 
-const PAGE_LIMIT = 20;
+const PAGE_LIMIT = 50;
 
 export const chatService = {
   async fetchConversations(): Promise<ConversationResponse> {

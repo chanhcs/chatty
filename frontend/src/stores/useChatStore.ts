@@ -1,4 +1,4 @@
-import { chatService } from "@/services/chatServices";
+import { chatService } from "@/services/chatService";
 import type { ChatState } from "@/types/chat";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";

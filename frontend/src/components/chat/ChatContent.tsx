@@ -117,7 +117,7 @@ const ChatContent = () => {
                         key={message._id}
                         message={message}
                         index={index}
-                        messages={messages}
+                        messages={reversedMessages}
                         selectedConvo={selectedConvo}
                         lastMessageStatus={lastMessageStatus}
                     />
