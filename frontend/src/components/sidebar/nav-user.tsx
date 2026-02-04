@@ -1,6 +1,6 @@
 import {
   BellIcon,
-  ChevronsUpDown,
+  Settings,
   UserIcon,
 } from "lucide-react"
 import {
@@ -52,7 +52,7 @@ export function NavUser({
                   {user.displayName}
                 </span>
               </div>
-              <ChevronsUpDown className="ml-auto size-4" />
+              <Settings className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent

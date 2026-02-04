@@ -13,7 +13,7 @@ import {
 import { Switch } from "../ui/switch"
 import AddGroupChatModal from "../chat/AddGroupChatModal"
 import GroupChatList from "../chat/GroupChatList/GroupChatList"
-import AddFriendModal from "../chat/AddFriendModal"
+import AddFriendModal from "../chat/AddFriendModal/AddFriendModal"
 import CreateNewChat from "../chat/CreateNewChat"
 import { useThemeStore } from "@/stores/useThemeStore"
 import { useAuthStore } from "@/stores/useAuthStore"
@@ -63,7 +63,7 @@ export function AppSidebar({ className, ...props }: React.ComponentProps<typeof 
         <SidebarGroup>
           <div className="flex items-center justify-between">
             <SidebarGroupLabel className="uppercase">
-              Group Chat
+              Groups
             </SidebarGroupLabel>
             <AddGroupChatModal />
           </div>
