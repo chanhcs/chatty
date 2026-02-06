@@ -1,9 +1,3 @@
-export interface ThemeState {
-    isDark: boolean
-    toggleTheme: () => void;
-    setTheme: (data: boolean) => void;
-}
-
 export interface User {
   _id: string;
   username: string;
@@ -15,9 +9,39 @@ export interface User {
   createdAt?: string;
   updatedAt?: string;
 }
+export interface FriendRequest {
+    _id: string;
+  from?: {
+    _id: string;
+    username: string;
+    displayName: string;
+    avatarUrl?: string;
+  };
+  to?: {
+    _id: string;
+    username: string;
+    displayName: string;
+    avatarUrl?: string;
+  };
+  message: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ThemeState {
+    isDark: boolean
+    toggleTheme: () => void;
+    setTheme: (data: boolean) => void;
+}
 
 export interface FriendState {
   loading: boolean;
+  receivedList: FriendRequest[];
+  sentList: FriendRequest[];
   searchByUsername: (username: string) => Promise<User | null>;
   addFriend: (to: string, message?: string) => Promise<string>;
+  getAllFriendRequests: () => Promise<void>;
+  acceptRequest: (requestId: string) => Promise<void>;
+  declineRequest: (requestId: string) => Promise<void>;
+  getFriends: () => Promise<void>;
 }

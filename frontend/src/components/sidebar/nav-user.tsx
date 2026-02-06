@@ -27,11 +27,12 @@ import {
 import Logout from "../auth/Logout"
 import type { User } from "@/types/store"
 
-export function NavUser({
-  user,
-}: {
-  user: User
-}) {
+interface NavUserProps {
+  user: User,
+  setFriendRequestOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export function NavUser({ user, setFriendRequestOpen }: NavUserProps) {
   const { isMobile } = useSidebar()
 
   return (
@@ -79,7 +80,7 @@ export function NavUser({
                 <UserIcon className="text-muted-foreground dark:group-focus:text-accent-foreground!" />
                 Account
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setFriendRequestOpen(true)}>
                 <BellIcon className="text-muted-foreground dark:group-focus:text-accent-foreground!" />
                 Notification
               </DropdownMenuItem>

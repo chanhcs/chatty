@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import {
     Dialog,
     DialogContent,
@@ -73,6 +73,7 @@ const AddFriendModal = () => {
         if (!searchUser) return;
         try {
             const message = await addFriend(searchUser._id, data.message.trim());
+            console.log('%cMyProject%cline:75%cmessage', 'color:#fff;background:#ee6f57;padding:3px;border-radius:2px', 'color:#fff;background:#1f3c88;padding:3px;border-radius:2px', 'color:#fff;background:rgb(3, 38, 58);padding:3px;border-radius:2px', message)
             toast.success(message);
             closeModal();
         } catch (error) {

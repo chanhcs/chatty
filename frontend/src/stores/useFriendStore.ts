@@ -4,12 +4,12 @@ import { create } from "zustand";
 
 export const useFriendStore = create<FriendState>((set, get) => ({
   loading: false,
+  receivedList: [],
+  sentList: [],
   searchByUsername: async (username) => {
     try {
       set({ loading: true });
-
       const user = await friendService.searchByUsername(username);
-
       return user;
     } catch (error) {
       console.error("find user error", error);
@@ -28,5 +28,59 @@ export const useFriendStore = create<FriendState>((set, get) => ({
     } finally {
       set({ loading: false });
     }
+  },
+  getAllFriendRequests: async () => {
+  try {
+    set({ loading: true });
+
+    const result = await friendService.getAllFriendRequest();
+
+    if (!result) return;
+
+    const { received, sent } = result;
+
+    set({ receivedList: received, sentList: sent });
+  } catch (error) {
+    console.error("An error occurred while fetching friend requests", error);
+  } finally {
+    set({ loading: false });
   }
+},
+
+acceptRequest: async (requestId) => {
+  try {
+    set({ loading: true });
+    await friendService.acceptRequest(requestId);
+    set((state) => ({
+      receivedList: state.receivedList.filter((r) => r._id !== requestId),
+    }));
+  } catch (error) {
+    console.error("An error occurred while accepting the friend request", error);
+  }
+},
+
+declineRequest: async (requestId) => {
+  try {
+    set({ loading: true });
+    await friendService.declineRequest(requestId);
+    set((state) => ({
+      receivedList: state.receivedList.filter((r) => r._id !== requestId),
+    }));
+  } catch (error) {
+    console.error("An error occurred while declining the friend request", error);
+  } finally {
+    set({ loading: false });
+  }
+},
+
+getFriends: async () => {
+  try {
+    set({ loading: true });
+    await friendService.getFriendList();
+  } catch (error) {
+    console.error("An error occurred while loading friends", error);
+  } finally {
+    set({ loading: false });
+  }
+}
 }));
