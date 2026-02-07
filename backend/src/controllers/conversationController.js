@@ -75,6 +75,11 @@ export const createConversation = async (req, res) => {
     }));
 
     const formatted = { ...conversation.toObject(), participants };
+    if (type === "group") {
+      memberIds.forEach((userId) => {
+        io.to(userId).emit("new-group", formatted);
+      });
+    }
     return res.status(201).json({ conversation: formatted });
   } catch (error) {
     console.error("Error creating conversation", error);

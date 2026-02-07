@@ -10,7 +10,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 // import { Switch } from "../ui/switch"
-import AddGroupChatModal from "../chat/AddGroupChatModal"
+import AddGroupChatModal from "../chat/AddGroupChatModal/AddGroupChatModal"
 import GroupChatList from "../chat/GroupChatList/GroupChatList"
 import AddFriendModal from "../chat/AddFriendModal/AddFriendModal"
 // import { useThemeStore } from "@/stores/useThemeStore"

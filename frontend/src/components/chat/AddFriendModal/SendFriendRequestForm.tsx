@@ -48,7 +48,7 @@ const SendFriendRequestForm = ({
           <Button
             type="button"
             variant="outline"
-            className="flex-1 hover:bg-red-500 hover:text-white cursor-pointer"
+            className="flex-1 hover:bg-muted cursor-pointer"
             onClick={onBack}
           >
             <ArrowBigLeftDash className="size-4" />
@@ -58,7 +58,7 @@ const SendFriendRequestForm = ({
           <Button
             type="submit"
             disabled={loading}
-            className="flex-1 bg-red-500 text-white hover:bg-red-500/90 transition-smooth cursor-pointer"
+            className="flex-1 bg-gradient-chat hover:opacity-90 text-white transition-smooth cursor-pointer"
           >
             {loading ? (
               <span>Sending...</span>

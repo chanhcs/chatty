@@ -26,6 +26,9 @@ import {
 
 import Logout from "../auth/Logout"
 import type { User } from "@/types/store"
+import { useAuthStore } from "@/stores/useAuthStore"
+import { useThemeStore } from "@/stores/useThemeStore"
+import { useNavigate } from "react-router-dom"
 
 interface NavUserProps {
   user: User,
@@ -34,6 +37,15 @@ interface NavUserProps {
 
 export function NavUser({ user, setFriendRequestOpen }: NavUserProps) {
   const { isMobile } = useSidebar()
+  const logout = useAuthStore(state => state.logout)
+  const setTheme = useThemeStore(state => state.setTheme);
+  const navigate = useNavigate()
+
+  const handleLogout = async () => {
+    await logout()
+    setTheme(false)
+    navigate('/login')
+  }
 
   return (
     <SidebarMenu>
@@ -86,7 +98,7 @@ export function NavUser({ user, setFriendRequestOpen }: NavUserProps) {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>
               <Logout />
             </DropdownMenuItem>
           </DropdownMenuContent>

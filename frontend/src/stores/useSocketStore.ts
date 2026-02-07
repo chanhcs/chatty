@@ -25,9 +25,11 @@ export const useSocketStore = create<SocketState>((set, get) => ({
     socket.on("connect", () => {
       console.log("connect socket successfully");
     });
+
     socket.on("online-users", (userIds) => {
       set({ onlineUsers: userIds })
     })
+
     socket.on("new-message", ({ message, conversation, unreadCounts}) => {
       useChatStore.getState().addMessage(message);
       const lastMessage = {
@@ -53,7 +55,7 @@ export const useSocketStore = create<SocketState>((set, get) => ({
       useChatStore.getState().updateConversation(updatedConversation);
     })
 
-     socket.on("read-message", ({ conversation, lastMessage }) => {
+    socket.on("read-message", ({ conversation, lastMessage }) => {
       const updated = {
         _id: conversation._id,
         lastMessage,
@@ -63,6 +65,11 @@ export const useSocketStore = create<SocketState>((set, get) => ({
       };
         
       useChatStore.getState().updateConversation(updated);
+    });
+
+    socket.on("new-group", (conversation) => {
+      useChatStore.getState().addConvo(conversation);
+      socket.emit("join-conversation", conversation._id);
     });
   },
   disconnectSocket: () => {

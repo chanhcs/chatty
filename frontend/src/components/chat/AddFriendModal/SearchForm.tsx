@@ -74,7 +74,7 @@ const SearchForm = ({
                     <Button
                         type="button"
                         variant="outline"
-                        className="flex-1 cursor-pointer hover:bg-red-500 hover:text-white transition-smooth"
+                        className="flex-1 cursor-pointer hover:bg-muted transition-smooth"
                         onClick={onCancel}
                     >
                         Cancel
@@ -84,7 +84,7 @@ const SearchForm = ({
                 <Button
                     type="submit"
                     disabled={loading || !usernameValue?.trim()}
-                    className="flex-1 bg-red-500 text-white hover:bg-red-500/90 transition-smooth cursor-pointer"
+                    className="flex-1 bg-gradient-chat hover:opacity-90 text-white transition-smooth cursor-pointer"
                 >
                     {loading ? (
                         <span>Searching...</span>
