@@ -3,6 +3,7 @@ import type { ChatState } from "@/types/chat";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { useAuthStore } from "./useAuthStore";
+import { useSocketStore } from "@/stores/useSocketStore";
 
 export const useChatStore = create<ChatState>()(
     persist(
@@ -59,7 +60,6 @@ export const useChatStore = create<ChatState>()(
                                 items: [],
                                 nextCursor: "",
                                 hasMore: true,
-                                initialized: false,
                             },
                         },
                     }));
@@ -86,7 +86,6 @@ export const useChatStore = create<ChatState>()(
                                     items: [...processed, ...prevItems],
                                     nextCursor: cursor ?? null,
                                     hasMore: Boolean(cursor),
-                                    initialized: true,
                                 },
                             },
                         };
@@ -98,7 +97,6 @@ export const useChatStore = create<ChatState>()(
                             ...state.messages,
                             [convoId]: {
                                 ...state.messages[convoId],
-                                initialized: true,
                             },
                         },
                     }));
@@ -172,7 +170,6 @@ export const useChatStore = create<ChatState>()(
                                     hasMore: state.messages[convoId]?.hasMore ?? false,
                                     nextCursor:
                                         state.messages[convoId]?.nextCursor ?? undefined,
-                                    initialized: true,
                                 },
                             },
                         };
@@ -211,12 +208,12 @@ export const useChatStore = create<ChatState>()(
                         conversations: state.conversations.map((c) =>
                             c._id === activeConversationId && c.lastMessage
                                 ? {
-                                      ...c,
-                                      unreadCounts: {
-                                          ...c.unreadCounts,
-                                          [user._id]: 0,
-                                      },
-                                  }
+                                    ...c,
+                                    unreadCounts: {
+                                        ...c.unreadCounts,
+                                        [user._id]: 0,
+                                    },
+                                }
                                 : c
                         ),
                     }));
@@ -225,6 +222,38 @@ export const useChatStore = create<ChatState>()(
                         "Failed to call markAsSeen in the store",
                         error
                     );
+                }
+            },
+
+            addConvo: (convo) => {
+                set((state) => {
+                    const exists = state.conversations.some(
+                        (c) => c._id.toString() === convo._id.toString()
+                    );
+
+                    return {
+                        conversations: exists
+                            ? state.conversations
+                            : [convo, ...state.conversations],
+                        activeConversationId: convo._id,
+                    };
+                });
+            },
+            createConversation: async (type, name, memberIds) => {
+                try {
+                    const conversation = await chatService.createConversation(
+                        type,
+                        name,
+                        memberIds
+                    );
+
+                    get().addConvo(conversation);
+
+                    useSocketStore
+                        .getState()
+                        .socket?.emit("join-conversation", conversation._id);
+                } catch (error) {
+                    console.error("Error create conversation", error);
                 }
             },
         }),

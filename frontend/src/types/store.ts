@@ -9,6 +9,12 @@ export interface User {
   createdAt?: string;
   updatedAt?: string;
 }
+export interface Friend {
+  _id: string;
+  username: string;
+  displayName: string;
+  avatarUrl?: string;
+}
 export interface FriendRequest {
     _id: string;
   from?: {
@@ -35,6 +41,7 @@ export interface ThemeState {
 }
 
 export interface FriendState {
+  friends: Friend[];
   loading: boolean;
   receivedList: FriendRequest[];
   sentList: FriendRequest[];

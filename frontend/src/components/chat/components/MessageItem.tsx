@@ -30,7 +30,7 @@ const MessageItem = ({ message, index, messages, selectedConvo, lastMessageStatu
                 </span>
             )}
             <div className={cn(
-                "flex gap-2 message-bounce mt-1",
+                "flex gap-2 message-bounce my-1",
                 message.isOwn ? "justify-end" : "justify-start"
             )}>
                 {!message.isOwn && (

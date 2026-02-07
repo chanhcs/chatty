@@ -1,6 +1,7 @@
 import { useFriendStore } from "@/stores/useFriendStore";
 import { Card } from "../ui/card";
 import { Dialog, DialogTrigger } from "../ui/dialog";
+import FriendListModal from "@/components/friendList/FriendListModal";
 
 const FriendList = () => {
     const { getFriends } = useFriendStore();
@@ -26,6 +27,7 @@ const FriendList = () => {
                             </span>
                         </div>
                     </DialogTrigger>
+                    <FriendListModal />
                 </Dialog>
             </Card>
         </div>
