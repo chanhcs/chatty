@@ -19,6 +19,7 @@ export interface AuthState {
     loading: boolean
     clearState: () => void
     setAccessToken: (data: string) => void
+    setUser: (user: User) => void
     signUp: (data: RegisterPayload) => Promise<void>
     signIn: (data: LoginPayload) => Promise<void>
     logout: () => Promise<void>

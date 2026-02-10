@@ -91,7 +91,7 @@ export interface ChatState {
   loading: boolean;
   reset: () => void;
   setActiveConversation: (id: string | null) => void;
-  fetchConversation: () => Promise<void>;
+  fetchConversations: () => Promise<void>;
   fetchMessages: (conversationId?: string) => Promise<void>;
   sendDirectMessage: (data: SendDirectMessage) => Promise<void>;
   sendGroupMessage: (data: SendGroupMessage) => Promise<void>;

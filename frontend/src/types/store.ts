@@ -52,3 +52,7 @@ export interface FriendState {
   declineRequest: (requestId: string) => Promise<void>;
   getFriends: () => Promise<void>;
 }
+
+export interface UserState {
+  updateAvatarUrl: (formData: FormData) => Promise<void>;
+}

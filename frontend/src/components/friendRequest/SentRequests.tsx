@@ -2,7 +2,7 @@ import FriendRequestItem from "@/components/friendRequest/FriendRequestItem";
 import { useFriendStore } from "@/stores/useFriendStore";
 
 const SentRequests = () => {
-    const { sentList } = useFriendStore();
+    const sentList = useFriendStore(state => state.sentList);
 
     if (!sentList || sentList.length === 0) {
         return (

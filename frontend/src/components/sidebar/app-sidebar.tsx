@@ -21,10 +21,12 @@ import { BellIcon } from "lucide-react"
 import FriendList from "@/components/friendList/FriendList"
 import { useState } from "react"
 import FriendRequestDialog from "@/components/friendRequest/FriendRequestDialog"
+import { Badge } from "../ui/badge"
+import { useFriendStore } from "@/stores/useFriendStore"
 
 export function AppSidebar({ className, ...props }: React.ComponentProps<typeof Sidebar>) {
-  // const { isDark, toggleTheme } = useThemeStore()
   const user = useAuthStore(state => state.user)
+  const received = useFriendStore(state => state.receivedList);
   const [friendRequestOpen, setFriendRequestOpen] = useState(false);
 
   return (
@@ -39,19 +41,13 @@ export function AppSidebar({ className, ...props }: React.ComponentProps<typeof 
                   <p className="text-xl font-bold">Chatty</p>
                 </div>
                 <div className="flex items-center gap-2">
-                  {/* <img src="/sun.svg" alt="sun" width={20} height={20} /> */}
-                  {/* <Switch
-                  checked={isDark}
-                  onCheckedChange={toggleTheme}
-                  className="transition-all duration-300
-                          data-[state=unchecked]:bg-[hsl(120_60%_45%)]!
-                          data-[state=checked]:bg-indigo-500!
-                          dark:data-[state=unchecked]:bg-[hsl(120_60%_45%)]!
-                          dark:data-[state=checked]:bg-indigo-500"
-                /> */}
-                  {/* <img src={isDark ? "/moon-white.svg" : "/moon.svg"} alt="moon" width={20} height={20} /> */}
-                  <div onClick={() => setFriendRequestOpen(true)} className="cursor-pointer">
+                  <div onClick={() => setFriendRequestOpen(true)} className="relative cursor-pointer">
                     <BellIcon className="text-muted-foreground dark:group-focus:text-accent-foreground!" />
+                    <div className="absolute z-30 -top-2.5 -right-1.5">
+                      {received.length > 0 && <Badge className="size-4.5 text-xs bg-gradient-chat border border-background">
+                        {received?.length}
+                      </Badge>}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -84,7 +80,7 @@ export function AppSidebar({ className, ...props }: React.ComponentProps<typeof 
           <SidebarGroup>
             <div className="flex items-center justify-between">
               <SidebarGroupLabel className="uppercase">
-                Direct Message
+                Friends
               </SidebarGroupLabel>
               <AddFriendModal />
             </div>

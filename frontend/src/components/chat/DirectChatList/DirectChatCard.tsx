@@ -42,7 +42,7 @@ const DirectChatCard = ({ convo }: { convo: Conversation }) => {
                         mode="sidebar"
                         type="direct"
                         name={otherUser.displayName}
-                        avatarUrl=""
+                        avatarUrl={otherUser.avatarUrl ?? ""}
                     />
                     <StatusBadge status={onlineUsers.includes(otherUser?._id ?? "") ? "online" : "offline"} />
                     {unreadCount > 0 && <UnreadCountBadge unreadCount={unreadCount} />}

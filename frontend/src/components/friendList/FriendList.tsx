@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useFriendStore } from "@/stores/useFriendStore";
 import { Card } from "../ui/card";
 import { Dialog, DialogTrigger } from "../ui/dialog";
@@ -5,6 +6,7 @@ import FriendListModal from "@/components/friendList/FriendListModal";
 
 const FriendList = () => {
     const { getFriends } = useFriendStore();
+    const [isOpen, setIsOpen] = useState(false);
 
     const handleGetFriends = async () => {
         await getFriends();
@@ -16,18 +18,18 @@ const FriendList = () => {
                 className="flex-1 p-2.5 glass hover:shadow-soft transition-smooth cursor-pointer group/card"
                 onClick={handleGetFriends}
             >
-                <Dialog>
+                <Dialog open={isOpen} onOpenChange={setIsOpen}>
                     <DialogTrigger>
                         <div className="flex items-center gap-4 cursor-pointer">
                             <div className="size-8 bg-gradient-chat rounded-full flex items-center justify-center group-hover/card:scale-110 transition-bounce">
                                 <img src="/friends.svg" alt='friends' width={20} height={20} />
                             </div>
                             <span className="text-sm font-medium capitalize">
-                                Friends
+                                Start a new conversation
                             </span>
                         </div>
                     </DialogTrigger>
-                    <FriendListModal />
+                    <FriendListModal setIsOpen={setIsOpen} />
                 </Dialog>
             </Card>
         </div>

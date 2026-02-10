@@ -1,4 +1,5 @@
 import express from "express";
+import { v2 as cloudinary } from "cloudinary";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import fs from "fs";
@@ -26,6 +27,12 @@ app.use(
     credentials: true,
   }),
 );
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 // swagger
 const swaggerDocument = JSON.parse(

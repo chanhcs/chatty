@@ -4,6 +4,7 @@ import { persist } from "zustand/middleware";
 import { authService } from '@/services/authService'
 import type { AuthState, LoginPayload, RegisterPayload } from '@/types/auth'
 import { useChatStore } from './useChatStore';
+import type { User } from '@/types/store';
 
 export const useAuthStore = create<AuthState>()(
     persist(
@@ -20,6 +21,9 @@ export const useAuthStore = create<AuthState>()(
             },
             setAccessToken: (accessToken: string) => {
                 set({ accessToken });
+            },
+            setUser: (user: User) => {
+                set({ user });
             },
             signUp: async (data: RegisterPayload) => {
                 try {
@@ -40,7 +44,7 @@ export const useAuthStore = create<AuthState>()(
                     const { accessToken } = await authService.login(data)
                     get().setAccessToken(accessToken)
                     await get().fetchMe()
-                    useChatStore.getState().fetchConversation()
+                    useChatStore.getState().fetchConversations()
                     toast.success('Login successful!')
                 } catch (error) {
                     console.error(error)
@@ -95,7 +99,7 @@ export const useAuthStore = create<AuthState>()(
         }),
         {
             name: "auth-store",
-            partialize: (state) => ({user: state.user})
+            partialize: (state) => ({ user: state.user })
         }
     )
 )

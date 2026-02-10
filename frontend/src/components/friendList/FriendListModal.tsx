@@ -5,19 +5,24 @@ import { Card } from "../ui/card";
 import { useChatStore } from "@/stores/useChatStore";
 import ChatAvatar from "@/components/chat/components/ChatAvatar";
 
-const FriendListModal = () => {
+interface FriendListModalProps {
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const FriendListModal = ({ setIsOpen }: FriendListModalProps) => {
     const { friends } = useFriendStore();
     const { createConversation } = useChatStore();
 
     const handleAddConversation = async (friendId: string) => {
         await createConversation("direct", "", [friendId]);
+        setIsOpen(false)
     };
 
     return (
         <DialogContent className="glass max-w-md">
             <DialogHeader>
                 <DialogTitle className="text-xl">
-                    Friends
+                    Start a new conversation
                 </DialogTitle>
             </DialogHeader>
 

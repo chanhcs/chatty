@@ -26,7 +26,7 @@ export const useChatStore = create<ChatState>()(
                 });
             },
 
-            fetchConversation: async () => {
+            fetchConversations: async () => {
                 try {
                     set({ convoloading: true });
                     const { conversations } = await chatService.fetchConversations();

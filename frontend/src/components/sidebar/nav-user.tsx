@@ -23,12 +23,13 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-
 import Logout from "../auth/Logout"
 import type { User } from "@/types/store"
 import { useAuthStore } from "@/stores/useAuthStore"
 import { useThemeStore } from "@/stores/useThemeStore"
 import { useNavigate } from "react-router-dom"
+import ProfileDialog from "../profile/ProfileDialog"
+import { useState } from "react"
 
 interface NavUserProps {
   user: User,
@@ -40,6 +41,7 @@ export function NavUser({ user, setFriendRequestOpen }: NavUserProps) {
   const logout = useAuthStore(state => state.logout)
   const setTheme = useThemeStore(state => state.setTheme);
   const navigate = useNavigate()
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleLogout = async () => {
     await logout()
@@ -48,62 +50,65 @@ export function NavUser({ user, setFriendRequestOpen }: NavUserProps) {
   }
 
   return (
-    <SidebarMenu>
-      <SidebarMenuItem>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <SidebarMenuButton
-              size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-            >
-              <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatarUrl} alt={user.username} />
-                <AvatarFallback className="rounded-lg">{user.displayName.charAt(0)}</AvatarFallback>
-              </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">
-                  {user.displayName}
-                </span>
-              </div>
-              <Settings className="ml-auto size-4" />
-            </SidebarMenuButton>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-            side={isMobile ? "bottom" : "right"}
-            align="end"
-            sideOffset={4}
-          >
-            <DropdownMenuLabel className="p-0 font-normal">
-              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+    <>
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <SidebarMenuButton
+                size="lg"
+                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              >
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src={user.avatarUrl} alt={user.username} />
                   <AvatarFallback className="rounded-lg">{user.displayName.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.displayName}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate font-medium">
+                    {user.displayName}
+                  </span>
                 </div>
-              </div>
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <UserIcon className="text-muted-foreground dark:group-focus:text-accent-foreground!" />
-                Account
+                <Settings className="ml-auto size-4" />
+              </SidebarMenuButton>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+              side={isMobile ? "bottom" : "right"}
+              align="end"
+              sideOffset={4}
+            >
+              <DropdownMenuLabel className="p-0 font-normal">
+                <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                  <Avatar className="h-8 w-8 rounded-lg">
+                    <AvatarImage src={user.avatarUrl} alt={user.username} />
+                    <AvatarFallback className="rounded-lg">{user.displayName.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                  <div className="grid flex-1 text-left text-sm leading-tight">
+                    <span className="truncate font-medium">{user.displayName}</span>
+                    <span className="truncate text-xs">{user.email}</span>
+                  </div>
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                <DropdownMenuItem onClick={() => setIsOpen(true)}>
+                  <UserIcon className="text-muted-foreground dark:group-focus:text-accent-foreground!" />
+                  Account
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setFriendRequestOpen(true)}>
+                  <BellIcon className="text-muted-foreground dark:group-focus:text-accent-foreground!" />
+                  Notification
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleLogout}>
+                <Logout />
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setFriendRequestOpen(true)}>
-                <BellIcon className="text-muted-foreground dark:group-focus:text-accent-foreground!" />
-                Notification
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout}>
-              <Logout />
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </SidebarMenuItem>
-    </SidebarMenu>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </SidebarMenuItem>
+      </SidebarMenu>
+      <ProfileDialog isOpen={isOpen} setIsOpen={setIsOpen} />
+    </>
   )
 }

@@ -5,6 +5,7 @@ const DirectChatList = () => {
     const { conversations } = useChatStore()
     if (!conversations) return null;
     const directChats = conversations.filter(convo => convo.type === 'direct')
+
     return (
         <>
             {directChats.map((convo) => (

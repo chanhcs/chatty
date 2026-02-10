@@ -46,8 +46,8 @@ const FriendRequestDialog = ({ open, setOpen }: FriendRequestDialogProps) => {
                     className="w-full"
                 >
                     <TabsList className="grid w-full grid-cols-2">
-                        <TabsTrigger value="received">Sent</TabsTrigger>
-                        <TabsTrigger value="sent">Received</TabsTrigger>
+                        <TabsTrigger value="received">Received</TabsTrigger>
+                        <TabsTrigger value="sent">Sent</TabsTrigger>
                     </TabsList>
 
                     <TabsContent value="received">
