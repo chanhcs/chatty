@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
     Dialog,
     DialogContent,
@@ -23,6 +23,7 @@ const AddFriendModal = () => {
     const [searchUser, setSearchUser] = useState<User>();
     const [searchedUsername, setSearchedUsername] = useState("");
     const [isOpen, setIsOpen] = useState(false);
+    const [searchError, setSearchError] = useState<string | null>(null);
     const { loading, searchByUsername, addFriend } = useFriendStore();
 
     const {
@@ -36,10 +37,20 @@ const AddFriendModal = () => {
     });
 
     const usernameValue = watch("username");
+
+    // Clear error when input is empty
+    useEffect(() => {
+        if (!usernameValue || usernameValue.trim() === "") {
+            setSearchError(null);
+            setIsFound(null);
+        }
+    }, [usernameValue]);
+
     const handleCancel = () => {
         reset();
         setSearchedUsername("");
         setIsFound(null);
+        setSearchError(null);
     };
 
     const closeModal = () => {
@@ -52,19 +63,28 @@ const AddFriendModal = () => {
         if (!username) return;
 
         setIsFound(null);
+        setSearchError(null);
         setSearchedUsername(username);
 
         try {
-            const foundUser = await searchByUsername(username);
-            if (foundUser) {
+            const result = await searchByUsername(username);
+            if (result?.user) {
                 setIsFound(true);
-                setSearchUser(foundUser);
+                setSearchUser(result.user);
             } else {
                 setIsFound(false);
+                if (result?.reason === "self") {
+                    setSearchError("You can’t send a friend request to yourself");
+                } else if (result?.reason === "friend") {
+                    setSearchError(`You are already friends with @${username}`);
+                } else {
+                    setSearchError(null);
+                }
             }
         } catch (error) {
             console.error(error);
             setIsFound(false);
+            setSearchError(null);
         }
     });
 
@@ -102,6 +122,7 @@ const AddFriendModal = () => {
                             loading={loading}
                             isFound={isFound}
                             searchedUsername={searchedUsername}
+                            searchError={searchError}
                             onSubmit={handleSearch}
                             onCancel={handleCancel}
                         />

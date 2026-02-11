@@ -1,5 +1,6 @@
 import { uploadImageFromBuffer } from "../middlewares/uploadMiddleware.js";
 import User from "../models/User.js";
+import Friend from "../models/Friend.js";
 
 export const authMe = async (req, res) => {
   try {
@@ -14,6 +15,7 @@ export const authMe = async (req, res) => {
 export const searchUserByUsername = async (req, res) => {
   try {
     const { username } = req.query;
+    const userId = req.user._id;
 
     if (!username || username.trim() === "") {
       return res
@@ -24,6 +26,29 @@ export const searchUserByUsername = async (req, res) => {
     const user = await User.findOne({ username }).select(
       "_id displayName username avatarUrl",
     );
+
+    if (!user) {
+      return res.status(200).json({ user: null });
+    }
+
+    // Don't allow users to search for themselves
+    if (user._id.toString() === userId.toString()) {
+      return res.status(200).json({ user: null, reason: "self" });
+    }
+
+    // Check if they're already friends
+    let userA = userId.toString();
+    let userB = user._id.toString();
+
+    if (userA > userB) {
+      [userA, userB] = [userB, userA];
+    }
+
+    const isFriend = await Friend.findOne({ userA, userB });
+
+    if (isFriend) {
+      return res.status(200).json({ user: null, reason: "friend" });
+    }
 
     return res.status(200).json({ user });
   } catch (error) {

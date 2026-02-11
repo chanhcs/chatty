@@ -14,6 +14,7 @@ interface SearchFormProps {
     usernameValue: string;
     isFound: boolean | null;
     searchedUsername: string;
+    searchError: string | null;
     onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
     onCancel: () => void;
 }
@@ -25,6 +26,7 @@ const SearchForm = ({
     loading,
     isFound,
     searchedUsername,
+    searchError,
     onSubmit,
     onCancel,
 }: SearchFormProps) => {
@@ -57,7 +59,13 @@ const SearchForm = ({
                         </p>
                     )}
 
-                    {isFound === false && (
+                    {searchError && (
+                        <span className="error-message">
+                            {searchError}
+                        </span>
+                    )}
+
+                    {isFound === false && !searchError && (
                         <span className="error-message">
                             User{" "}
                             <span className="font-semibold">

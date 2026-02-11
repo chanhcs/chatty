@@ -16,7 +16,7 @@ export interface Friend {
   avatarUrl?: string;
 }
 export interface FriendRequest {
-    _id: string;
+  _id: string;
   from?: {
     _id: string;
     username: string;
@@ -35,9 +35,14 @@ export interface FriendRequest {
 }
 
 export interface ThemeState {
-    isDark: boolean
-    toggleTheme: () => void;
-    setTheme: (data: boolean) => void;
+  isDark: boolean
+  toggleTheme: () => void;
+  setTheme: (data: boolean) => void;
+}
+
+export interface SearchState {
+  user: User
+  reason: string;
 }
 
 export interface FriendState {
@@ -45,7 +50,7 @@ export interface FriendState {
   loading: boolean;
   receivedList: FriendRequest[];
   sentList: FriendRequest[];
-  searchByUsername: (username: string) => Promise<User | null>;
+  searchByUsername: (username: string) => Promise<SearchState | null>;
   addFriend: (to: string, message?: string) => Promise<string>;
   getAllFriendRequests: () => Promise<void>;
   acceptRequest: (requestId: string) => Promise<void>;

@@ -2,16 +2,14 @@ import { useFriendStore } from "@/stores/useFriendStore";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 import FriendRequestItem from "@/components/friendRequest/FriendRequestItem";
+import EmptyRequest from "./EmptyRequest";
 
 const ReceivedRequests = () => {
     const { acceptRequest, declineRequest, loading, receivedList } = useFriendStore();
 
     if (!receivedList || receivedList.length === 0) {
-        return (
-            <p className="text-center text-sm text-muted-foreground">
-                No friend requests yet.
-            </p>
-        );
+        return <EmptyRequest message="No friend requests received yet" />
+
     }
 
     const handleAccept = async (requestId: string) => {

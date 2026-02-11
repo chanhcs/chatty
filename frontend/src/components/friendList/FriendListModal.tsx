@@ -27,7 +27,8 @@ const FriendListModal = ({ setIsOpen }: FriendListModalProps) => {
             </DialogHeader>
 
             <div className="space-y-4">
-                <div className="flex items-center gap-2">
+                <div className="text-sm font-semibold text-muted-foreground mb-3 uppercase tracking-wide">
+                    Friends
                 </div>
                 <div className="space-y-2 max-h-60 overflow-y-auto">
                     {friends.map((friend) => (

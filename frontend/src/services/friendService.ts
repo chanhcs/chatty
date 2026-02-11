@@ -3,7 +3,7 @@ import api from "@/lib/axios";
 export const friendService = {
   async searchByUsername(username: string) {
     const res = await api.get(`/users/search?username=${username}`);
-    return res.data.user;
+    return res.data;
   },
 
 
@@ -11,7 +11,7 @@ export const friendService = {
     const res = await api.post("/friends/requests", { to, message });
     return res.data.message;
   },
-  
+
   async getAllFriendRequest() {
     try {
       const res = await api.get("/friends/requests");

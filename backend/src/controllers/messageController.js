@@ -5,16 +5,42 @@ import {
   emitNewMessage,
   updateConversationAfterCreateMessage,
 } from "../utils/messageHelper.js";
+import { v2 as cloudinary } from "cloudinary";
+
+export const uploadChatImage = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+    const result = await new Promise((resolve, reject) => {
+      cloudinary.uploader.upload_stream(
+        {
+          folder: "chatty/messages",
+          resource_type: "image",
+          transformation: [{ width: 800, height: 800, crop: "limit" }],
+        },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      ).end(req.file.buffer);
+    });
+    return res.status(200).json({ url: result.secure_url });
+  } catch (error) {
+    console.error("Upload chat image error", error);
+    return res.status(500).json({ message: "Upload failed" });
+  }
+};
 
 export const sendDirectMessage = async (req, res) => {
   try {
-    const { recipientId, content, conversationId } = req.body;
+    const { recipientId, content, imgUrl, conversationId } = req.body;
     const senderId = req.user._id;
 
     let conversation;
 
-    if (!content) {
-      return res.status(400).json({ message: "Missing content" });
+    if (!content && !imgUrl) {
+      return res.status(400).json({ message: "Missing content or image" });
     }
 
     if (conversationId) {
@@ -37,6 +63,7 @@ export const sendDirectMessage = async (req, res) => {
       conversationId: conversation._id,
       senderId,
       content,
+      imgUrl,
     });
 
     updateConversationAfterCreateMessage(conversation, message, senderId);
@@ -52,18 +79,19 @@ export const sendDirectMessage = async (req, res) => {
 
 export const sendGroupMessage = async (req, res) => {
   try {
-    const { conversationId, content } = req.body;
+    const { conversationId, content, imgUrl } = req.body;
     const senderId = req.user._id;
     const conversation = req.conversation;
 
-    if (!content) {
-      return res.status(400).json("Missing content");
+    if (!content && !imgUrl) {
+      return res.status(400).json("Missing content or image");
     }
 
     const message = await Message.create({
       conversationId,
       senderId,
       content,
+      imgUrl,
     });
 
     updateConversationAfterCreateMessage(conversation, message, senderId);
