@@ -22,7 +22,7 @@ const ProfileDialog = ({ isOpen, setIsOpen }: ProfileDialogProps) => {
                         {/* heading */}
                         <DialogHeader className="mb-6">
                             <DialogTitle className="text-2xl font-bold text-foreground">
-                                Profile & Settings
+                                Account & Settings
                             </DialogTitle>
                         </DialogHeader>
 

@@ -20,8 +20,15 @@ io.use(socketAuthMiddleware);
 const onlineUsers = new Map();
 io.on("connection", async (socket) => {
   const user = socket.user;
-  console.log(`user ${user.displayName} online with socket: ${socket.id}`);
+  console.log(
+    `user ${user.displayName} (${user._id}) online with socket: ${socket.id}`,
+  );
   onlineUsers.set(user._id, socket.id);
+
+  // Join user to personal room for notifications
+  socket.join(user._id.toString());
+  console.log(` Socket joined user room: ${user._id.toString()}`);
+
   io.emit("online-users", [...onlineUsers.keys()]);
   const conversationIds = await getUserConversationsForSocketIO(user._id);
   conversationIds.forEach((id) => {

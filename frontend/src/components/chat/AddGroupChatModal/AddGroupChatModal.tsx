@@ -21,8 +21,9 @@ import { toast } from 'sonner';
 const AddGroupChatModal = () => {
     const { friends, getFriends } = useFriendStore();
     const { loading, createConversation } = useChatStore();
-    const [groupName, setGroupName] = useState("");
-    const [search, setSearch] = useState("");
+    const [groupName, setGroupName] = useState<string>("");
+    const [search, setSearch] = useState<string>("");
+    const [isOpen, setIsOpen] = useState<boolean>(false)
     const [invitedUsers, setInvitedUsers] = useState<Friend[]>([]);
 
     const filteredFriends = friends.filter(friend => {
@@ -66,14 +67,16 @@ const AddGroupChatModal = () => {
             );
 
             setSearch("");
+            setGroupName("")
             setInvitedUsers([]);
+            setIsOpen(false)
         } catch (error) {
             console.error("error create new group chat modal:", error);
         }
     };
 
     return (
-        <Dialog>
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
                 <Button
                     variant="ghost"
@@ -81,7 +84,7 @@ const AddGroupChatModal = () => {
                     className="flex z-10 justify-center items-center size-5 rounded-full hover:bg-sidebar-accent transition cursor-pointer"
                 >
                     <Users className="size-4" />
-                    <span className="sr-only">Tạo nhóm</span>
+                    <span className="sr-only">create group</span>
                 </Button>
             </DialogTrigger>
             <DialogContent>
@@ -99,14 +102,25 @@ const AddGroupChatModal = () => {
                         >
                             Group name
                         </Label>
-                        <Input
-                            id="groupName"
-                            placeholder="Type the group name here..."
-                            className="glass border-border/50 focus:border-primary/50 transition-smooth"
-                            value={groupName}
-                            onChange={(e) => setGroupName(e.target.value)}
-                            required
-                        />
+                        <div className="relative">
+                            <Input
+                                id="groupName"
+                                placeholder="Type the group name here..."
+                                className="glass border-border/50 focus:border-primary/50 transition-smooth"
+                                value={groupName}
+                                onChange={(e) => setGroupName(e.target.value)}
+                                required
+                            />
+                            {groupName && (
+                                <button
+                                    type="button"
+                                    onClick={() => setGroupName("")}
+                                    className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition"
+                                >
+                                    <X className="size-4" />
+                                </button>
+                            )}
+                        </div>
                     </div>
 
                     <div className="space-y-2">

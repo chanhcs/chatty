@@ -86,4 +86,10 @@ declineRequest: async (requestId) => {
       set({ loading: false });
     }
   },
+
+  addReceivedRequest: (request) => {
+    set((state) => ({
+      receivedList: [request, ...state.receivedList],
+    }));
+  },
 }));

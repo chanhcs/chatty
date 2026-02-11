@@ -74,8 +74,8 @@ const AccountForm = ({ userInfo }: Props) => {
                     />
                 </div>
 
-                <Button className="w-full md:w-auto bg-gradient-primary hover:opacity-90 transition-opacity">
-                    Lưu thay đổi
+                <Button className="cursor-pointer w-full md:w-auto bg-gradient-primary hover:opacity-90 transition-opacity">
+                    Save
                 </Button>
             </CardContent>
         </Card>

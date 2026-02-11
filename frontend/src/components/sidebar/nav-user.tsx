@@ -92,12 +92,12 @@ export function NavUser({ user, setFriendRequestOpen }: NavUserProps) {
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
                 <DropdownMenuItem onClick={() => setIsOpen(true)}>
-                  <UserIcon className="text-muted-foreground dark:group-focus:text-accent-foreground!" />
-                  Account
+                  <UserIcon className="text-muted-foreground" />
+                  <span className="dark:text-white">Account</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setFriendRequestOpen(true)}>
-                  <BellIcon className="text-muted-foreground dark:group-focus:text-accent-foreground!" />
-                  Notification
+                  <BellIcon className="text-muted-foreground" />
+                  <span className="dark:text-white">Notification</span>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />

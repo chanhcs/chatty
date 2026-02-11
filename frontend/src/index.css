@@ -29,8 +29,7 @@
 
 @layer base {
   :root {
-    /* Base colors - soft pastels */
-    --background: 0 0% 100%; /*violet-50*/
+    --background: 0 0% 100%;
     --foreground: 217.2 32.6% 25%;
 
     /* Card system */
@@ -152,9 +151,9 @@
   .dark {
     /* Dark mode - neon on dark aesthetic */
     --background: 240 15% 18%;
-    --foreground: 214.3 31.8% 91.4%; /* slate-200 */
+    --foreground: 214.3 31.8% 91.4%; 
 
-    --card: 240 15% 12%;
+    --card: 240 5.9% 10%;
     --card-foreground: 214.3 31.8% 91.4%;
     --card-active: 260 25% 18%;
 

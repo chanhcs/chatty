@@ -1,6 +1,7 @@
 import Friend from "../models/Friend.js";
 import User from "../models/User.js";
 import FriendRequest from "../models/FriendRequest.js";
+import { io } from "../socket/index.js";
 
 export const sendFriendRequest = async (req, res) => {
   try {
@@ -42,7 +43,9 @@ export const sendFriendRequest = async (req, res) => {
     }
 
     if (existingRequest) {
-      return res.status(400).json({ message: "A friend request is already pending" });
+      return res
+        .status(400)
+        .json({ message: "A friend request is already pending" });
     }
 
     const request = await FriendRequest.create({
@@ -50,6 +53,18 @@ export const sendFriendRequest = async (req, res) => {
       to,
       message,
     });
+
+    // Populate sender info
+    const populatedRequest = await FriendRequest.findById(request._id)
+      .populate("from", "_id username displayName avatarUrl")
+      .lean();
+
+    // Emit socket event to recipient
+    console.log(
+      `📤 Emitting new-friend-request to ${to.toString()}:`,
+      populatedRequest,
+    );
+    io.to(to.toString()).emit("new-friend-request", populatedRequest);
 
     return res
       .status(201)
@@ -74,7 +89,9 @@ export const acceptFriendRequest = async (req, res) => {
     if (request.to.toString() !== userId.toString()) {
       return res
         .status(403)
-        .json({ message: "You do not have permission to accept this friend request" });
+        .json({
+          message: "You do not have permission to accept this friend request",
+        });
     }
 
     const friend = await Friend.create({
@@ -97,7 +114,10 @@ export const acceptFriendRequest = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("An error occurred while accepting the friend request", error);
+    console.error(
+      "An error occurred while accepting the friend request",
+      error,
+    );
     return res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -116,14 +136,19 @@ export const declineFriendRequest = async (req, res) => {
     if (request.to.toString() !== userId.toString()) {
       return res
         .status(403)
-        .json({ message: "You do not have permission to decline this friend request" });
+        .json({
+          message: "You do not have permission to decline this friend request",
+        });
     }
 
     await FriendRequest.findByIdAndDelete(requestId);
 
     return res.sendStatus(204);
   } catch (error) {
-    console.error("An error occurred while declining the friend request", error);
+    console.error(
+      "An error occurred while declining the friend request",
+      error,
+    );
     return res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -151,7 +176,7 @@ export const getAllFriends = async (req, res) => {
     }
 
     const friends = friendships.map((f) =>
-      f.userA._id.toString() === userId.toString() ? f.userB : f.userA
+      f.userA._id.toString() === userId.toString() ? f.userB : f.userA,
     );
 
     return res.status(200).json({ friends });
@@ -174,7 +199,10 @@ export const getFriendRequests = async (req, res) => {
 
     res.status(200).json({ sent, received });
   } catch (error) {
-    console.error("An error occurred while fetching the friend request list", error);
+    console.error(
+      "An error occurred while fetching the friend request list",
+      error,
+    );
     return res.status(500).json({ message: "Internal server error" });
   }
 };
