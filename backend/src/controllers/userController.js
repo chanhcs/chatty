@@ -89,3 +89,45 @@ export const uploadAvatar = async (req, res) => {
     return res.status(500).json({ message: "Upload failed" });
   }
 };
+
+export const updateProfile = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { displayName, username, email, bio } = req.body;
+
+    // Basic validation
+    if (username && typeof username === "string") {
+      const existing = await User.findOne({ username });
+      if (existing && existing._id.toString() !== userId.toString()) {
+        return res.status(400).json({ message: "Username is already taken" });
+      }
+    }
+
+    if (email && typeof email === "string") {
+      const existingEmail = await User.findOne({ email });
+      if (existingEmail && existingEmail._id.toString() !== userId.toString()) {
+        return res.status(400).json({ message: "Email is already used" });
+      }
+    }
+
+    const updated = await User.findByIdAndUpdate(
+      userId,
+      {
+        ...(displayName !== undefined && { displayName }),
+        ...(username !== undefined && { username }),
+        ...(email !== undefined && { email }),
+        ...(bio !== undefined && { bio }),
+      },
+      { new: true },
+    ).select("_id displayName username email bio avatarUrl");
+
+    if (!updated) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json({ user: updated });
+  } catch (error) {
+    console.error("Error updating profile", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};

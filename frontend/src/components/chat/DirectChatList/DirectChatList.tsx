@@ -2,7 +2,7 @@ import { useChatStore } from "@/stores/useChatStore";
 import DirectChatCard from "./DirectChatCard";
 
 const DirectChatList = () => {
-    const { conversations } = useChatStore()
+    const conversations = useChatStore(state => state.conversations)
     if (!conversations) return null;
     const directChats = conversations.filter(convo => convo.type === 'direct')
 
