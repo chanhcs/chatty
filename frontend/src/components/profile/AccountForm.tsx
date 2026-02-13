@@ -1,4 +1,4 @@
-import { CircleUser } from "lucide-react";
+import { CircleUser, Save } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
     Card,
@@ -20,11 +20,12 @@ type EditableField = {
     key: keyof Pick<User, "displayName" | "username" | "email">;
     label: string;
     type?: string;
+    disabled?: boolean;
 };
 
 const PERSONAL_FIELDS: EditableField[] = [
     { key: "displayName", label: "Full name" },
-    { key: "username", label: "Username" },
+    { key: "username", label: "Username", disabled: true },
     { key: "email", label: "Email", type: "email" },
 ];
 
@@ -79,13 +80,13 @@ const AccountForm = ({ userInfo }: Props) => {
                     Profile
                 </CardTitle>
                 <CardDescription>
-                    Your personal details and profile information
+                    Update your profile information
                 </CardDescription>
             </CardHeader>
 
             <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 gap-4">
-                    {PERSONAL_FIELDS.map(({ key, label, type }) => (
+                    {PERSONAL_FIELDS.map(({ key, label, type, disabled }) => (
                         <div
                             key={key}
                             className="space-y-2"
@@ -96,7 +97,8 @@ const AccountForm = ({ userInfo }: Props) => {
                                 type={type ?? "text"}
                                 value={(form as any)[key] ?? ""}
                                 onChange={(e) => handleChange(key as keyof User, e.target.value)}
-                                className="glass-light border-border/30"
+                                disabled={disabled}
+                                className={`glass-light border-border/30 ${disabled ? "bg-muted cursor-not-allowed" : ""}`}
                             />
                         </div>
                     ))}
@@ -113,13 +115,17 @@ const AccountForm = ({ userInfo }: Props) => {
                     />
                 </div>
 
-                <Button
-                    onClick={handleSave}
-                    disabled={loading}
-                    className="cursor-pointer w-full md:w-auto bg-gradient-primary hover:opacity-90 transition-opacity"
-                >
-                    {loading ? "Saving..." : "Save"}
-                </Button>
+                <div className="flex justify-end">
+                    <Button
+                        onClick={handleSave}
+                        disabled={loading}
+                        className="cursor-pointer w-full md:w-auto bg-gradient-primary hover:opacity-90 transition-opacity"
+                    >
+                        <Save className="size-5" />
+                        Save
+                    </Button>
+                </div>
+
             </CardContent>
         </Card>
     );

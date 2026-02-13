@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Sun, Moon, Settings } from "lucide-react";
 import {
     Card,
@@ -10,10 +9,11 @@ import {
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useThemeStore } from "@/stores/useThemeStore";
+import { useSocketStore } from "@/stores/useSocketStore";
 
 const SettingsForm = () => {
     const { isDark, toggleTheme } = useThemeStore();
-    const [onlineStatus, setOnlineStatus] = useState(true);
+    const { showOnline, setShowOnline } = useSocketStore();
 
     return (
         <Card className="glass-strong border-border/30">
@@ -66,8 +66,8 @@ const SettingsForm = () => {
                     </div>
                     <Switch
                         id="online-status"
-                        checked={onlineStatus}
-                        onCheckedChange={setOnlineStatus}
+                        checked={!!showOnline}
+                        onCheckedChange={(val) => setShowOnline(!!val)}
                         className="data-[state=checked]:bg-primary-glow"
                     />
                 </div>

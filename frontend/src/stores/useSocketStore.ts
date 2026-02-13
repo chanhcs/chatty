@@ -10,6 +10,14 @@ const baseURL = import.meta.env.VITE_SOCKET_URL;
 export const useSocketStore = create<SocketState>((set, get) => ({
   socket: null,
   onlineUsers: [],
+  showOnline: true,
+  setShowOnline: (visible: boolean) => {
+    const socket = get().socket;
+    set({ showOnline: visible });
+    if (socket && socket.connected) {
+      socket.emit("set-presence", visible);
+    }
+  },
   connectSocket: () => {
     const accessToken = useAuthStore.getState().accessToken;
     const existingSocket = get().socket;
@@ -25,13 +33,18 @@ export const useSocketStore = create<SocketState>((set, get) => ({
 
     socket.on("connect", () => {
       console.log("connect socket successfully");
+      // inform server about current presence preference
+      const { showOnline } = get();
+      if (typeof showOnline !== "undefined") {
+        socket.emit("set-presence", showOnline);
+      }
     });
 
     socket.on("online-users", (userIds) => {
       set({ onlineUsers: userIds })
     })
 
-    socket.on("new-message", ({ message, conversation, unreadCounts}) => {
+    socket.on("new-message", ({ message, conversation, unreadCounts }) => {
       useChatStore.getState().addMessage(message);
       const lastMessage = {
         _id: conversation.lastMessage._id,
@@ -43,7 +56,7 @@ export const useSocketStore = create<SocketState>((set, get) => ({
           avatarUrl: null,
         },
       };
-        const updatedConversation = {
+      const updatedConversation = {
         ...conversation,
         lastMessage,
         unreadCounts,
@@ -64,7 +77,7 @@ export const useSocketStore = create<SocketState>((set, get) => ({
         unreadCounts: conversation.unreadCounts,
         seenBy: conversation.seenBy
       };
-        
+
       useChatStore.getState().updateConversation(updated);
     });
 

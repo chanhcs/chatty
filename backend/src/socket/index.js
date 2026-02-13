@@ -30,6 +30,19 @@ io.on("connection", async (socket) => {
   console.log(` Socket joined user room: ${user._id.toString()}`);
 
   io.emit("online-users", [...onlineUsers.keys()]);
+  // listen for presence changes (show/hide online status)
+  socket.on("set-presence", (visible = true) => {
+    try {
+      if (visible) {
+        onlineUsers.set(user._id, socket.id);
+      } else {
+        onlineUsers.delete(user._id);
+      }
+      io.emit("online-users", [...onlineUsers.keys()]);
+    } catch (err) {
+      console.error("set-presence error", err);
+    }
+  });
   const conversationIds = await getUserConversationsForSocketIO(user._id);
   conversationIds.forEach((id) => {
     socket.join(id);

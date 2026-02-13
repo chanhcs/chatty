@@ -25,10 +25,12 @@ const SendFriendRequestForm = ({
     <form onSubmit={onSubmit}>
       <div className="space-y-4">
         <div className="success-message space-y-1">
-          Found <span className="font-semibold">@{searchedUsername}.</span> You can send a message now
+          Become friends with <span className="font-semibold">@{searchedUsername}</span> to start chatting
         </div>
-
-        <div className="space-y-3">
+        <div className="flex justify-center">
+          <img src='/friendship.png' alt="friendship" width={180} height={180} />
+        </div>
+        {/* <div className="space-y-3">
           <Label
             htmlFor="message"
             className="text-sm font-semibold"
@@ -42,7 +44,7 @@ const SendFriendRequestForm = ({
             className="glass border-border/50 focus:border-primary/50 transition-smooth resize-none"
             {...register("message")}
           />
-        </div>
+        </div> */}
 
         <DialogFooter>
           <Button

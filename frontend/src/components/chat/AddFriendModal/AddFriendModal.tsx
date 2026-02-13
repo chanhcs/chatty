@@ -31,6 +31,7 @@ const AddFriendModal = () => {
         handleSubmit,
         watch,
         reset,
+        setValue,
         formState: { errors },
     } = useForm<IFormValues>({
         defaultValues: { username: "", message: "" },
@@ -117,6 +118,7 @@ const AddFriendModal = () => {
                     <>
                         <SearchForm
                             register={register}
+                            setValue={setValue}
                             errors={errors}
                             usernameValue={usernameValue}
                             loading={loading}

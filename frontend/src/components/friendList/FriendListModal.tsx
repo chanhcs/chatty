@@ -1,4 +1,5 @@
 import { useFriendStore } from "@/stores/useFriendStore";
+import { useSocketStore } from "@/stores/useSocketStore";
 import { DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Users } from "lucide-react";
 import { Card } from "../ui/card";
@@ -11,6 +12,7 @@ interface FriendListModalProps {
 
 const FriendListModal = ({ setIsOpen }: FriendListModalProps) => {
     const { friends } = useFriendStore();
+    const { onlineUsers } = useSocketStore();
     const { createConversation } = useChatStore();
 
     const handleAddConversation = async (friendId: string) => {
@@ -21,8 +23,9 @@ const FriendListModal = ({ setIsOpen }: FriendListModalProps) => {
     return (
         <DialogContent className="glass max-w-md">
             <DialogHeader>
-                <DialogTitle className="text-xl">
-                    Start a new conversation
+                <DialogTitle className="flex items-center text-xl gap-2">
+                    <img src="/conversation.svg" alt="conversation" width={27} height={27} />
+                    <span>Start a new conversation</span>
                 </DialogTitle>
             </DialogHeader>
 
@@ -45,6 +48,12 @@ const FriendListModal = ({ setIsOpen }: FriendListModalProps) => {
                                         name={friend.displayName}
                                         avatarUrl={friend.avatarUrl}
                                     />
+                                    {/* online indicator */}
+                                    {onlineUsers && onlineUsers.includes(friend._id) ? (
+                                        <span className="absolute bottom-0 right-0 size-3 rounded-full ring-1 ring-white bg-green-500 animate-pulse" />
+                                    ) : (
+                                        <span className="absolute bottom-0 right-0 size-3 rounded-full ring-1 ring-white bg-slate-400" />
+                                    )}
                                 </div>
 
                                 <div className="flex-1 min-w-0 flex flex-col">

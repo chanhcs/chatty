@@ -128,7 +128,7 @@ const AddGroupChatModal = () => {
                             htmlFor="invite"
                             className="text-sm font-semibold"
                         >
-                            Invite members
+                            Invite friends
                         </Label>
 
                         <div className="relative">
