@@ -81,10 +81,10 @@ const AddGroupChatModal = () => {
                 <Button
                     variant="ghost"
                     onClick={handleGetFriends}
-                    className="flex z-10 justify-center items-center size-5 rounded-full hover:bg-sidebar-accent transition cursor-pointer"
+                    className="flex z-10 justify-center items-center rounded-full hover:bg-sidebar-accent transition cursor-pointer"
                 >
                     <Users className="size-4" />
-                    <span className="sr-only">create group</span>
+                    <span>Create group</span>
                 </Button>
             </DialogTrigger>
             <DialogContent>
@@ -174,7 +174,7 @@ const AddGroupChatModal = () => {
                                 <span>Creating your group...</span>
                             ) : (
                                 <>
-                                    <UserPlus className="size-4 mr-2" />
+                                    <UserPlus className="size-4" />
                                     Create group
                                 </>
                             )}

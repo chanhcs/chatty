@@ -24,15 +24,16 @@ const FriendListModal = ({ setIsOpen }: FriendListModalProps) => {
         <DialogContent className="glass max-w-md">
             <DialogHeader>
                 <DialogTitle className="flex items-center text-xl gap-2">
-                    <img src="/conversation.svg" alt="conversation" width={27} height={27} />
+                    <img src="/conversation.svg" alt="conversation" width={25} height={25} />
                     <span>Start a new conversation</span>
                 </DialogTitle>
             </DialogHeader>
 
             <div className="space-y-4">
-                <div className="text-sm font-semibold text-muted-foreground mb-3 uppercase tracking-wide">
-                    Friends
-                </div>
+                {friends.length > 0 &&
+                    (<div className="text-sm font-semibold text-muted-foreground mb-3 uppercase tracking-wide">
+                        Friends
+                    </div>)}
                 <div className="space-y-2 max-h-60 overflow-y-auto">
                     {friends.map((friend) => (
                         <Card

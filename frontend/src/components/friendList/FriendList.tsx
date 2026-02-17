@@ -24,7 +24,7 @@ const FriendList = () => {
                             <div className="size-8 bg-gradient-chat rounded-full flex items-center justify-center group-hover/card:scale-110 transition-bounce">
                                 <img src="/friends.svg" alt='friends' width={20} height={20} />
                             </div>
-                            <span className="text-sm font-medium capitalize">
+                            <span className="text-sm font-medium">
                                 Start a new conversation
                             </span>
                         </div>

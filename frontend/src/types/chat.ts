@@ -62,7 +62,7 @@ export interface Message {
 }
 
 export interface EmojiSelect {
-    native: string;
+  native: string;
 }
 
 export interface SendGroupMessage {
@@ -81,7 +81,7 @@ export interface ChatState {
     string,
     {
       items: Message[];
-      hasMore: boolean; 
+      hasMore: boolean;
       nextCursor?: string | null;
     }
   >;

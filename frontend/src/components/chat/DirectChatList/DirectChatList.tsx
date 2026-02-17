@@ -1,15 +1,11 @@
-import { useChatStore } from "@/stores/useChatStore";
+import type { Conversation } from "@/types/chat";
 import DirectChatCard from "./DirectChatCard";
-import EmptyState from "@/components/empty/EmptyState";
 
-const DirectChatList = () => {
-    const conversations = useChatStore(state => state.conversations)
-    if (!conversations) return null;
-    const directChats = conversations.filter(convo => convo.type === 'direct')
-    if (directChats?.length === 0) {
-        return <EmptyState message="No conversations yet" />
-    }
+interface DirectChatListProps {
+    directChats: Conversation[];
+}
 
+const DirectChatList = ({ directChats }: DirectChatListProps) => {
     return (
         <>
             {directChats.map((convo) => (

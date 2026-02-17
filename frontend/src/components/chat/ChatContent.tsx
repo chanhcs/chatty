@@ -27,7 +27,6 @@ const ChatContent = () => {
         fetchMessages(activeConversationId);
     }, [activeConversationId, hasMore, fetchMessages]);
 
-
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {

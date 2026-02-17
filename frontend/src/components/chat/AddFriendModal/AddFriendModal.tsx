@@ -104,9 +104,9 @@ const AddFriendModal = () => {
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
-                <div className="flex justify-center items-center size-5 rounded-full hover:bg-sidebar-accent cursor-pointer z-10">
+                <div className="flex justify-center items-center rounded-full hover:bg-sidebar-accent cursor-pointer z-10 gap-2 py-2 px-3">
                     <UserPlus className="size-4" />
-                    <span className="sr-only">Add Friend</span>
+                    <span className='text-sm font-medium'>Add Friend</span>
                 </div>
             </DialogTrigger>
 

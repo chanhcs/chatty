@@ -21,11 +21,15 @@ import { useState } from "react"
 import FriendRequestDialog from "@/components/friendRequest/FriendRequestDialog"
 import { Badge } from "../ui/badge"
 import { useFriendStore } from "@/stores/useFriendStore"
+import { useChatStore } from "@/stores/useChatStore"
 
 export function AppSidebar({ className, ...props }: React.ComponentProps<typeof Sidebar>) {
   const user = useAuthStore(state => state.user)
   const received = useFriendStore(state => state.receivedList);
+  const conversations = useChatStore(state => state.conversations)
   const [friendRequestOpen, setFriendRequestOpen] = useState(false);
+  const groupChats = conversations.filter(convo => convo.type === 'group')
+  const directChats = conversations.filter(convo => convo.type === 'direct')
 
   return (
     <>
@@ -61,29 +65,22 @@ export function AppSidebar({ className, ...props }: React.ComponentProps<typeof 
             </SidebarGroupContent>
           </SidebarGroup>
 
-          {/* Group Chat */}
           <SidebarGroup>
             <div className="flex items-center justify-between">
-              <SidebarGroupLabel className="uppercase">
-                Group
-              </SidebarGroupLabel>
+              <AddFriendModal />
               <AddGroupChatModal />
             </div>
-            <SidebarGroupContent>
-              <GroupChatList />
-            </SidebarGroupContent>
           </SidebarGroup>
 
-          {/* Direct Chat */}
           <SidebarGroup>
-            <div className="flex items-center justify-between">
+            {(groupChats.length > 0 || directChats.length > 0) && (
               <SidebarGroupLabel className="uppercase">
-                Friends
+                Conversations
               </SidebarGroupLabel>
-              <AddFriendModal />
-            </div>
+            )}
             <SidebarGroupContent>
-              <DirectChatList />
+              {groupChats.length > 0 && <GroupChatList groupChats={groupChats} />}
+              {directChats.length > 0 && <DirectChatList directChats={directChats} />}
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
