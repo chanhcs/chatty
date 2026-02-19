@@ -3,8 +3,7 @@ import axios from 'axios'
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  timeout: 8000,
-  withCredentials: true,
+  withCredentials: true
 });
 
 api.interceptors.request.use(request => {
@@ -13,9 +12,9 @@ api.interceptors.request.use(request => {
     request.headers['Authorization'] = `Bearer ${accessToken}`;
   }
   return request;
-  }, (error) => {
-    return Promise.reject(error);
-  }
+}, (error) => {
+  return Promise.reject(error);
+}
 );
 
 api.interceptors.response.use(
@@ -38,6 +37,6 @@ api.interceptors.response.use(
       }
     }
     return Promise.reject(error);
-});
+  });
 
 export default api

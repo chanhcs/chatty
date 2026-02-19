@@ -4,8 +4,11 @@ import Friend from "../models/Friend.js";
 
 export const authMe = async (req, res) => {
   try {
-    const user = req.user;
-    return res.status(200).json({ user });
+    const { password, ...safeUser } = req.user.toObject
+      ? req.user.toObject()
+      : req.user;
+
+    return res.status(200).json({ user: safeUser });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error." });

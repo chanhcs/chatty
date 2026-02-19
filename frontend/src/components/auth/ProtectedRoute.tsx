@@ -7,25 +7,29 @@ const ProtectedRoute = () => {
     const { accessToken, loading, refresh } = useAuthStore();
     const [initialized, setInitialized] = useState(false);
 
-    const init = async () => {
-        if (!accessToken) {
-            await refresh();
-        }
-        setInitialized(true);
-    };
-
     useEffect(() => {
+        const init = async () => {
+            try {
+                if (!accessToken) {
+                    await refresh();
+                }
+            } catch (error) {
+                console.error("Auth initialization failed:", error);
+            } finally {
+                setInitialized(true);
+            }
+        };
+
         init();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     if (!initialized || loading) {
-        return <Loading />
+        return <Loading />;
     }
 
     if (!accessToken) {
-        return (
-            <Navigate to="/login" replace />
-        );
+        return <Navigate to="/login" replace />;
     }
 
     return <Outlet />;
