@@ -1,12 +1,12 @@
 import FriendRequestItem from "@/components/friendRequest/FriendRequestItem";
 import { useFriendStore } from "@/stores/useFriendStore";
-import EmptyState from "../empty/EmptyState";
+import EmptyRequest from "./EmptyRequest";
 
 const SentRequests = () => {
     const sentList = useFriendStore(state => state.sentList);
 
     if (!sentList || sentList.length === 0) {
-        return <EmptyState message="No friend requests sent yet" image />
+        return <EmptyRequest message="No friend requests sent yet" />
     }
 
     return (
