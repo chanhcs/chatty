@@ -56,8 +56,8 @@ export const useAuthStore = create<AuthState>()(
             logout: async () => {
                 try {
                     set({ loading: true })
-                    get().clearState()
                     await authService.logout()
+                    get().clearState()
                     toast.success('Logout successful!')
                 } catch (error) {
                     console.error(error)

@@ -96,7 +96,13 @@ export const logout = async (req, res) => {
     if (token) {
       await Session.deleteOne({ refreshToken: token });
     }
-    res.clearCookie("refreshToken");
+    const clearCookieOptions = {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      path: "/",
+    };
+    res.clearCookie("refreshToken", clearCookieOptions);
     return res.sendStatus(204);
   } catch (error) {
     console.error(error);
